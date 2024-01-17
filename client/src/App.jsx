@@ -5,8 +5,8 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import SideBar from "./components/SideBar/SideBar.jsx";
 import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home.jsx";
-import DashBoard from "./components/Dashboard/Dashboard.jsx";
-import Analytics from "./components/Analytics/Analytics.jsx";
+import DashBoard from "./pages/Dashboard/Dashboard.jsx";
+import Analytics from "./pages/Analytics/Analytics.jsx";
 import styles from "./app.module.css";
 function App() {
   return (

@@ -1,0 +1,18 @@
+.card {
+  width: 18rem;
+  height: 9rem;
+  background-color: #fff;
+  border-radius: 0.6rem;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.numericValue {
+  font-size: 3.75rem;
+  padding-right: 1.3rem;
+}
+
+.textValue {
+  margin-right: 1rem;
+}
