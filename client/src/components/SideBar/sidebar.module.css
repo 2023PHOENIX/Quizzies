@@ -1,0 +1,35 @@
+.sidebar {
+  width: 12rem;
+  height: 100vh;
+  background-color: #fff;
+  text-align: center;
+  color: #474444;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.sidebar h1 {
+  font-family: Jomhuria;
+  font-size: 70px;
+  margin-top: 1rem;
+}
+
+.elements {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+
+  gap: 30px;
+}
+.logout {
+  margin-bottom: 1rem;
+}
+.line {
+  width: 8rem;
+  margin: auto;
+  padding-bottom: 0.8rem;
+}
