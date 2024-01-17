@@ -15,7 +15,9 @@ const Sidebar = () => {
         <Link to="/analytics">
           <div>Analytics</div>
         </Link>
-        <div>Create Quiz</div>
+        <Link to="/create-quiz">
+          <div>Create Quiz</div>
+        </Link>
       </div>
 
       <img src={line} alt="line" className={styles.line} />

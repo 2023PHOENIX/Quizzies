@@ -2,12 +2,12 @@
 
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import SideBar from "./components/SideBar/SideBar.jsx";
 import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home.jsx";
 import DashBoard from "./pages/Dashboard/Dashboard.jsx";
 import Analytics from "./pages/Analytics/Analytics.jsx";
 import styles from "./app.module.css";
+import CreateQuiz from "./pages/createQuiz/CreateQuiz.jsx";
 function App() {
   return (
     <div className={styles.app}>
@@ -16,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />}>
             <Route path="/dashboard" element={<DashBoard />} />
             <Route path="/analytics" element={<Analytics />} />
+            <Route path="/create-quiz" element={<CreateQuiz />} />
           </Route>
           <Route path="/auth" element={<Auth />} />
         </Routes>
