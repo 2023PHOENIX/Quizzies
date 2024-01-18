@@ -5,9 +5,23 @@ import { v4 as uuidv4 } from "uuid";
 import QuestionData from "./QuestionData";
 import { useState } from "react";
 import Timer from "../Timer/Timer";
+import { useEffect } from "react";
 
 const QuizForm2 = () => {
   const [questionData, setQuestionData] = useState([{ id: uuidv4() }]);
+
+  const [selectedQuestionData, setSelectedQuestionData] = useState({
+    id: questionData[0].id,
+    title: "",
+    choiceType: "Text",
+    options: [
+      { id: uuidv4(), text: "PIZZA", url: "https://something.com" },
+      { id: uuidv4(), text: "BURGER", url: "" },
+      { id: uuidv4(), text: "", url: "" },
+    ],
+  });
+
+  console.log(selectedQuestionData);
   const addQuestion = () => {
     setQuestionData((prevData) => [...prevData, { id: uuidv4() }]);
   };
@@ -19,6 +33,7 @@ const QuizForm2 = () => {
 
     setQuestionData(updatedQuestionData);
   };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.questionCounter}>
@@ -27,7 +42,7 @@ const QuizForm2 = () => {
             <div
               className={styles.qNum}
               key={qd.id}
-              onClick={() => console.log(qd.id)}
+              onClick={() => setSelectedQuestionData(qd)}
             >
               {i + 1}
               {i > 0 && (
@@ -64,7 +79,10 @@ const QuizForm2 = () => {
         </div>
         <p> Max 5 questions</p>
       </div>
-      <QuestionData setQuestionData={setQuestionData} />
+      <QuestionData
+        data={selectedQuestionData}
+        setData={setSelectedQuestionData}
+      />
       <div className={styles.buttons}>
         <button
           className={styles.buttonStyle}

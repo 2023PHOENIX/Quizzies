@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./quizForm2.module.css";
-const QuestionData = ({ setQuestionData }) => {
-  const [correctAnswer, setCorrectAnswer] = useState();
+import { useEffect } from "react";
+const QuestionData = ({ data, setData }) => {
   const [totalOptions, setTotalOptions] = useState([
     {
       id: uuidv4(),
@@ -10,32 +10,57 @@ const QuestionData = ({ setQuestionData }) => {
     { id: uuidv4() },
   ]);
 
-  console.log(totalOptions);
-  const [questionType, setQuestionType] = useState("Text");
-
   const addOption = () => {
-    setTotalOptions((prevData) => [...prevData, { id: uuidv4() }]);
+    setData((prevData) => ({
+      ...prevData,
+      options: [...prevData.options, { id: uuidv4(), text: "" }],
+    }));
   };
   const removeOption = (id) => {
-    const updatedOptionData = totalOptions.filter((option) => option.id !== id);
+    console.log(id);
+    const updatedOptionData = data?.options?.filter(
+      (option) => option.id !== id,
+    );
 
-    setTotalOptions(updatedOptionData);
+    setData((prev) => ({ ...prev, options: updatedOptionData }));
   };
   const handleOptionChange = (e) => {
-    console.log(e.target.value);
-    setCorrectAnswer(e.target.value);
+    setData((prev) => ({ ...prev, correctAnswer: e.target.value }));
   };
 
-  const handleQuestionType = (e) => {
-    console.log(questionType);
-    setQuestionType(e.target.name);
+  const handleQuestionTypeChange = (e) => {
+    setData((prev) => ({ ...prev, choiceType: e.target.name }));
   };
+
+  const handleInputChanges = (id, type, data) => {
+    if (type === "text") {
+      setData((prevData) => ({
+        ...prevData,
+        options: prevData.options.map((option) =>
+          option.id === id ? { ...option, text: data } : option,
+        ),
+      }));
+    } else {
+      setData((prevData) => ({
+        ...prevData,
+        options: prevData.options.map((option) =>
+          option.id === id ? { ...option, url: data } : option,
+        ),
+      }));
+    }
+  };
+
+  console.log(data?.choiceType);
   return (
     <>
       <input
         type="text"
         className={styles.questionTitle}
         placeholder="Poll Question"
+        defaultValue={data?.title}
+        onChange={(e) =>
+          setData((prev) => ({ ...prev, title: e.target.value }))
+        }
       />
       <div className={styles.choiceType}>
         <div className="choiceText">Option Type </div>
@@ -44,9 +69,9 @@ const QuestionData = ({ setQuestionData }) => {
             type="radio"
             id="option1"
             name="Text"
-            checked={questionType === "Text"}
+            checked={data?.choiceType === "Text"}
             className={styles.radioInput}
-            onChange={handleQuestionType}
+            onChange={handleQuestionTypeChange}
           />
           <label htmlFor="option1" className={styles.radioLabel}>
             Text
@@ -56,10 +81,10 @@ const QuestionData = ({ setQuestionData }) => {
           <input
             type="radio"
             id="option2"
-            name="Image URL"
-            checked={questionType === "Image URL"}
+            name="url"
+            checked={data?.choiceType == "url"}
             className={styles.radioInput}
-            onChange={handleQuestionType}
+            onChange={handleQuestionTypeChange}
           />
           <label htmlFor="option2" className={styles.radioLabel}>
             Image URL
@@ -71,8 +96,8 @@ const QuestionData = ({ setQuestionData }) => {
             id="option3"
             name="text&image"
             className={styles.radioInput}
-            checked={questionType === "text&image"}
-            onChange={handleQuestionType}
+            checked={data?.choiceType === "text&image"}
+            onChange={handleQuestionTypeChange}
           />
           <label htmlFor="option3" className={styles.radioLabel}>
             Text & Image URL
@@ -80,29 +105,47 @@ const QuestionData = ({ setQuestionData }) => {
         </div>
       </div>
       <div className={styles.optionsToChoose}>
-        {totalOptions.map((opData, index) => (
+        {data?.options?.map((opData, index) => (
           <div className={styles.option} key={index}>
             <input
               type="radio"
               value={`option${index + 1}`}
-              checked={correctAnswer === `option${index + 1}`}
+              checked={data?.correctAnswer === `option${index + 1}`}
               onChange={handleOptionChange}
               className={styles.optionRadio}
             />
-            <input
-              type="text"
-              placeholder={
-                questionType === "text&image" ? "Text" : `${questionType}`
-              }
-              className={styles.optionInput}
-              style={questionType === "text&image" ? { width: "11rem" } : {}}
-            />
-            {questionType === "text&image" && (
+            {(data?.choiceType === "text&image" ||
+              data?.choiceType === "Text") && (
+              <input
+                type="text"
+                placeholder={
+                  data?.choiceType === "text&image"
+                    ? "Text"
+                    : `${data?.choiceType}`
+                }
+                className={styles.optionInput}
+                style={
+                  data?.choiceType === "text&image" ? { width: "11rem" } : {}
+                }
+                value={data?.options[index].text}
+                defaultValue={opData.text}
+                onChange={(e) =>
+                  handleInputChanges(opData.id, "text", e.target.value)
+                }
+              />
+            )}
+            {(data?.choiceType === "text&image" ||
+              data?.choiceType === "url") && (
               <input
                 type="text"
                 placeholder="Image URL"
+                value={data?.options[index].url}
+                defaultValue={opData?.url}
                 className={styles.optionInput}
-                style={{ width: "16rem" }}
+                style={data?.choiceType == "url" ? {} : { width: "16rem" }}
+                onChange={(e) =>
+                  handleInputChanges(opData.id, "url", e.target.value)
+                }
               />
             )}
             {index > 1 && (
@@ -126,7 +169,7 @@ const QuestionData = ({ setQuestionData }) => {
             )}
           </div>
         ))}
-        {totalOptions.length < 4 && (
+        {data?.options?.length < 4 && (
           <div className={styles.addOption} onClick={addOption}>
             Add Option
           </div>
