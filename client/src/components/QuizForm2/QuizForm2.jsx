@@ -28,97 +28,97 @@ const QuizForm2 = () => {
     );
 
     setQuestionData(updatedQuestionData);
+  };
 
-  }
-};
+  const updateUserInputQuestionData = () => { };
+  // WARN: using index over here
 
-const updateUserInputQuestionData = () => { };
-// WARN: using index over here
+  const changeSelectedQuestion = (index) => {
+    setSelectedQuestionData(questionData[index]);
+  };
 
-const changeSelectedQuestion = (index) => {
-  setSelectedQuestionData(questionData[index]);
-};
+  const handleCreateQuiz = () => {
+    // HACK: corner case: last question is not added till now
+    updateUserInputQuestionData();
+  };
+  console.log(selectedQuestionData.id);
+  useEffect(() => {
+    const updatedQuestionData = questionData.map((q) => {
+      return q.id === selectedQuestionData.id ? selectedQuestionData : q;
+    });
 
-const handleCreateQuiz = () => {
-  // HACK: corner case: last question is not added till now
-  updateUserInputQuestionData();
-};
+    setQuestionData(updatedQuestionData);
 
-useEffect(() => {
-  const updatedQuestionData = questionData.map((q) => {
-    return q.id === selectedQuestionData.id ? selectedQuestionData : q;
-  });
-
-  setQuestionData(updatedQuestionData);
-}, [selectedQuestionData]);
-return (
-  <div className={styles.wrapper}>
-    <div className={styles.questionCounter}>
-      <div className={styles.qCount}>
-        {questionData &&
-          questionData.map((qd, i) => (
-            <div
-              className={styles.qNum}
-              key={qd.id}
-              onClick={() => changeSelectedQuestion(i)}
-            >
-              {i + 1}
-              {i > 0 && (
-                <div
-                  className={styles.crossBtn}
-                  onClick={() => removeQuestion(qd.id, i)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="9"
-                    height="9"
-                    viewBox="0 0 9 9"
-                    fill="none"
+    console.log(selectedQuestionData.id);
+  }, [selectedQuestionData]);
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.questionCounter}>
+        <div className={styles.qCount}>
+          {questionData &&
+            questionData.map((qd, i) => (
+              <div
+                className={styles.qNum}
+                key={qd.id}
+                onClick={() => changeSelectedQuestion(i)}
+              >
+                {i + 1}
+                {i > 0 && (
+                  <div
+                    className={styles.crossBtn}
+                    onClick={() => removeQuestion(qd.id, i)}
                   >
-                    <path
-                      d="M7.5553 1.34619L1.46155 7.43994M1.46155 1.34619L7.5553 7.43994"
-                      stroke="#474444"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </div>
-              )}
-            </div>
-          ))}
-        {questionData.length < 5 && (
-          <img
-            src={plus}
-            className={styles.plusQuestion}
-            onClick={addQuestion}
-          />
-        )}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="9"
+                      height="9"
+                      viewBox="0 0 9 9"
+                      fill="none"
+                    >
+                      <path
+                        d="M7.5553 1.34619L1.46155 7.43994M1.46155 1.34619L7.5553 7.43994"
+                        stroke="#474444"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </div>
+            ))}
+          {questionData.length < 5 && (
+            <img
+              src={plus}
+              className={styles.plusQuestion}
+              onClick={addQuestion}
+            />
+          )}
+        </div>
+        <p> Max 5 questions</p>
       </div>
-      <p> Max 5 questions</p>
+      <QuestionData
+        data={selectedQuestionData}
+        setData={setSelectedQuestionData}
+      />
+      <div className={styles.buttons}>
+        <button
+          className={styles.buttonStyle}
+          style={{ background: "#fff", color: "#474444" }}
+        >
+          Cancel
+        </button>
+        <button
+          className={styles.buttonStyle}
+          style={{ background: "#60B84B", color: "#fff" }}
+          onClick={handleCreateQuiz}
+        >
+          Create Quiz
+        </button>
+      </div>
+      <Timer />
     </div>
-    <QuestionData
-      data={selectedQuestionData}
-      setData={setSelectedQuestionData}
-    />
-    <div className={styles.buttons}>
-      <button
-        className={styles.buttonStyle}
-        style={{ background: "#fff", color: "#474444" }}
-      >
-        Cancel
-      </button>
-      <button
-        className={styles.buttonStyle}
-        style={{ background: "#60B84B", color: "#fff" }}
-        onClick={handleCreateQuiz}
-      >
-        Create Quiz
-      </button>
-    </div>
-    <Timer />
-  </div>
-);
+  );
 };
 
 export default QuizForm2;
