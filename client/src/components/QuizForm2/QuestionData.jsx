@@ -47,7 +47,6 @@ const QuestionData = ({ data, setData }) => {
         type="text"
         className={styles.questionTitle}
         placeholder="Poll Question"
-        defaultValue={data?.title}
         value={data?.title}
         onChange={(e) =>
           setData((prev) => ({ ...prev, title: e.target.value }))
@@ -118,8 +117,7 @@ const QuestionData = ({ data, setData }) => {
                   style={
                     data?.choiceType === "text&image" ? { width: "11rem" } : {}
                   }
-                  value={data?.options[index].text}
-                  defaultValue={opData.text}
+                  value={opData.text}
                   onChange={(e) =>
                     handleInputChanges(opData.id, "text", e.target.value)
                   }
@@ -130,8 +128,7 @@ const QuestionData = ({ data, setData }) => {
                 <input
                   type="text"
                   placeholder="Image URL"
-                  value={data?.options[index].url}
-                  defaultValue={opData?.url}
+                  value={opData?.url}
                   className={styles.optionInput}
                   style={data?.choiceType == "url" ? {} : { width: "16rem" }}
                   onChange={(e) =>

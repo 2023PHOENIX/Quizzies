@@ -22,37 +22,41 @@ const QuizForm2 = () => {
     setQuestionData((prevData) => [...prevData, generateDefaultData()]);
   };
 
-  const removeQuestion = (id) => {
+  const removeQuestion = (id, i) => {
     const updatedQuestionData = questionData.filter(
       (question) => question.id !== id,
     );
 
     setQuestionData(updatedQuestionData);
-  };
 
-  const updateUserInputQuestionData = () => {
-    const updatedQuestionData = questionData.map((q) => {
-      return q.id === selectedQuestionData.id ? selectedQuestionData : q;
-    });
+  }
+};
 
-    setQuestionData(updatedQuestionData);
-  };
-  // WARN: using index over here
+const updateUserInputQuestionData = () => { };
+// WARN: using index over here
 
-  const changeSelectedQuestion = (index) => {
-    updateUserInputQuestionData();
-    setSelectedQuestionData(questionData[index]);
-  };
+const changeSelectedQuestion = (index) => {
+  setSelectedQuestionData(questionData[index]);
+};
 
-  const handleCreateQuiz = () => {
-    // HACK: corner case: last question is not added till now
-    updateUserInputQuestionData();
-  };
-  return (
-    <div className={styles.wrapper}>
-      <div className={styles.questionCounter}>
-        <div className={styles.qCount}>
-          {questionData.map((qd, i) => (
+const handleCreateQuiz = () => {
+  // HACK: corner case: last question is not added till now
+  updateUserInputQuestionData();
+};
+
+useEffect(() => {
+  const updatedQuestionData = questionData.map((q) => {
+    return q.id === selectedQuestionData.id ? selectedQuestionData : q;
+  });
+
+  setQuestionData(updatedQuestionData);
+}, [selectedQuestionData]);
+return (
+  <div className={styles.wrapper}>
+    <div className={styles.questionCounter}>
+      <div className={styles.qCount}>
+        {questionData &&
+          questionData.map((qd, i) => (
             <div
               className={styles.qNum}
               key={qd.id}
@@ -62,7 +66,7 @@ const QuizForm2 = () => {
               {i > 0 && (
                 <div
                   className={styles.crossBtn}
-                  onClick={() => removeQuestion(qd.id)}
+                  onClick={() => removeQuestion(qd.id, i)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -83,38 +87,38 @@ const QuizForm2 = () => {
               )}
             </div>
           ))}
-          {questionData.length < 5 && (
-            <img
-              src={plus}
-              className={styles.plusQuestion}
-              onClick={addQuestion}
-            />
-          )}
-        </div>
-        <p> Max 5 questions</p>
+        {questionData.length < 5 && (
+          <img
+            src={plus}
+            className={styles.plusQuestion}
+            onClick={addQuestion}
+          />
+        )}
       </div>
-      <QuestionData
-        data={selectedQuestionData}
-        setData={setSelectedQuestionData}
-      />
-      <div className={styles.buttons}>
-        <button
-          className={styles.buttonStyle}
-          style={{ background: "#fff", color: "#474444" }}
-        >
-          Cancel
-        </button>
-        <button
-          className={styles.buttonStyle}
-          style={{ background: "#60B84B", color: "#fff" }}
-          onClick={handleCreateQuiz}
-        >
-          Create Quiz
-        </button>
-      </div>
-      <Timer />
+      <p> Max 5 questions</p>
     </div>
-  );
+    <QuestionData
+      data={selectedQuestionData}
+      setData={setSelectedQuestionData}
+    />
+    <div className={styles.buttons}>
+      <button
+        className={styles.buttonStyle}
+        style={{ background: "#fff", color: "#474444" }}
+      >
+        Cancel
+      </button>
+      <button
+        className={styles.buttonStyle}
+        style={{ background: "#60B84B", color: "#fff" }}
+        onClick={handleCreateQuiz}
+      >
+        Create Quiz
+      </button>
+    </div>
+    <Timer />
+  </div>
+);
 };
 
 export default QuizForm2;
