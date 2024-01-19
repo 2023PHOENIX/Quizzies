@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import styles from "./quizForm2.module.css";
-const QuestionData = ({ data, setData }) => {
+const QuestionData = ({ data, setData, quizType }) => {
   const addOption = () => {
     setData((prevData) => ({
       ...prevData,
@@ -97,13 +97,15 @@ const QuestionData = ({ data, setData }) => {
       <div className={styles.optionsToChoose}>
         {data?.options?.map((opData, index) => (
           <div className={styles.option} key={index}>
-            <input
-              type="radio"
-              value={`option${index + 1}`}
-              checked={data?.correctAnswer === `option${index + 1}`}
-              onChange={handleOptionChange}
-              className={styles.optionRadio}
-            />
+            {quizType === "qa" && (
+              <input
+                type="radio"
+                value={`option${index + 1}`}
+                checked={data?.correctAnswer === `option${index + 1}`}
+                onChange={handleOptionChange}
+                className={styles.optionRadio}
+              />
+            )}{" "}
             {(data?.choiceType === "text&image" ||
               data?.choiceType === "Text") && (
                 <input
@@ -113,7 +115,8 @@ const QuestionData = ({ data, setData }) => {
                       ? "Text"
                       : `${data?.choiceType}`
                   }
-                  className={styles.optionInput}
+                  className={`${styles.optionInput} ${quizType === "poll" ? styles.poll : ""
+                    }`}
                   style={
                     data?.choiceType === "text&image" ? { width: "11rem" } : {}
                   }
@@ -129,7 +132,8 @@ const QuestionData = ({ data, setData }) => {
                   type="text"
                   placeholder="Image URL"
                   value={opData?.url}
-                  className={styles.optionInput}
+                  className={`${styles.optionInput} ${quizType === "poll" ? styles.poll : ""
+                    }`}
                   style={data?.choiceType == "url" ? {} : { width: "16rem" }}
                   onChange={(e) =>
                     handleInputChanges(opData.id, "url", e.target.value)
