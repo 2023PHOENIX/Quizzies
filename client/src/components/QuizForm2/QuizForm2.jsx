@@ -6,24 +6,20 @@ import QuestionData from "./QuestionData";
 import { useState } from "react";
 import Timer from "../Timer/Timer";
 import { useEffect } from "react";
+import { generateDefaultData } from "../../data/questionDefaultData";
 
 const QuizForm2 = () => {
-  const [questionData, setQuestionData] = useState([{ id: uuidv4() }]);
+  const [questionData, setQuestionData] = useState([generateDefaultData()]);
 
-  const [selectedQuestionData, setSelectedQuestionData] = useState({
-    id: questionData[0].id,
-    title: "",
-    choiceType: "Text",
-    options: [
-      { id: uuidv4(), text: "PIZZA", url: "https://something.com" },
-      { id: uuidv4(), text: "BURGER", url: "" },
-      { id: uuidv4(), text: "", url: "" },
-    ],
-  });
+  const [selectedQuestionData, setSelectedQuestionData] = useState(
+    questionData[0],
+  );
+
+  console.log(questionData);
 
   console.log(selectedQuestionData);
   const addQuestion = () => {
-    setQuestionData((prevData) => [...prevData, { id: uuidv4() }]);
+    setQuestionData((prevData) => [...prevData, generateDefaultData()]);
   };
 
   const removeQuestion = (id) => {
@@ -34,6 +30,24 @@ const QuizForm2 = () => {
     setQuestionData(updatedQuestionData);
   };
 
+  const updateUserInputQuestionData = () => {
+    const updatedQuestionData = questionData.map((q) => {
+      return q.id === selectedQuestionData.id ? selectedQuestionData : q;
+    });
+
+    setQuestionData(updatedQuestionData);
+  };
+  // WARN: using index over here
+
+  const changeSelectedQuestion = (index) => {
+    updateUserInputQuestionData();
+    setSelectedQuestionData(questionData[index]);
+  };
+
+  const handleCreateQuiz = () => {
+    // HACK: corner case: last question is not added till now
+    updateUserInputQuestionData();
+  };
   return (
     <div className={styles.wrapper}>
       <div className={styles.questionCounter}>
@@ -42,7 +56,7 @@ const QuizForm2 = () => {
             <div
               className={styles.qNum}
               key={qd.id}
-              onClick={() => setSelectedQuestionData(qd)}
+              onClick={() => changeSelectedQuestion(i)}
             >
               {i + 1}
               {i > 0 && (
@@ -93,6 +107,7 @@ const QuizForm2 = () => {
         <button
           className={styles.buttonStyle}
           style={{ background: "#60B84B", color: "#fff" }}
+          onClick={handleCreateQuiz}
         >
           Create Quiz
         </button>

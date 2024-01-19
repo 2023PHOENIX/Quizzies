@@ -1,15 +1,6 @@
-import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./quizForm2.module.css";
-import { useEffect } from "react";
 const QuestionData = ({ data, setData }) => {
-  const [totalOptions, setTotalOptions] = useState([
-    {
-      id: uuidv4(),
-    },
-    { id: uuidv4() },
-  ]);
-
   const addOption = () => {
     setData((prevData) => ({
       ...prevData,
@@ -17,7 +8,6 @@ const QuestionData = ({ data, setData }) => {
     }));
   };
   const removeOption = (id) => {
-    console.log(id);
     const updatedOptionData = data?.options?.filter(
       (option) => option.id !== id,
     );
@@ -58,6 +48,7 @@ const QuestionData = ({ data, setData }) => {
         className={styles.questionTitle}
         placeholder="Poll Question"
         defaultValue={data?.title}
+        value={data?.title}
         onChange={(e) =>
           setData((prev) => ({ ...prev, title: e.target.value }))
         }
@@ -116,38 +107,38 @@ const QuestionData = ({ data, setData }) => {
             />
             {(data?.choiceType === "text&image" ||
               data?.choiceType === "Text") && (
-              <input
-                type="text"
-                placeholder={
-                  data?.choiceType === "text&image"
-                    ? "Text"
-                    : `${data?.choiceType}`
-                }
-                className={styles.optionInput}
-                style={
-                  data?.choiceType === "text&image" ? { width: "11rem" } : {}
-                }
-                value={data?.options[index].text}
-                defaultValue={opData.text}
-                onChange={(e) =>
-                  handleInputChanges(opData.id, "text", e.target.value)
-                }
-              />
-            )}
+                <input
+                  type="text"
+                  placeholder={
+                    data?.choiceType === "text&image"
+                      ? "Text"
+                      : `${data?.choiceType}`
+                  }
+                  className={styles.optionInput}
+                  style={
+                    data?.choiceType === "text&image" ? { width: "11rem" } : {}
+                  }
+                  value={data?.options[index].text}
+                  defaultValue={opData.text}
+                  onChange={(e) =>
+                    handleInputChanges(opData.id, "text", e.target.value)
+                  }
+                />
+              )}
             {(data?.choiceType === "text&image" ||
               data?.choiceType === "url") && (
-              <input
-                type="text"
-                placeholder="Image URL"
-                value={data?.options[index].url}
-                defaultValue={opData?.url}
-                className={styles.optionInput}
-                style={data?.choiceType == "url" ? {} : { width: "16rem" }}
-                onChange={(e) =>
-                  handleInputChanges(opData.id, "url", e.target.value)
-                }
-              />
-            )}
+                <input
+                  type="text"
+                  placeholder="Image URL"
+                  value={data?.options[index].url}
+                  defaultValue={opData?.url}
+                  className={styles.optionInput}
+                  style={data?.choiceType == "url" ? {} : { width: "16rem" }}
+                  onChange={(e) =>
+                    handleInputChanges(opData.id, "url", e.target.value)
+                  }
+                />
+              )}
             {index > 1 && (
               <div
                 className={styles.deleteBucket}
