@@ -1,7 +1,11 @@
 import styles from "./congrats.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import charmCross from "../../assets/charm_cross.svg";
+import { useNavigate } from "react-router-dom";
 const Congrats = () => {
+  const navigate = useNavigate();
   const containerId = "congrats";
   const notify = () =>
     toast.success("Congratulations! You did it!", { containerId });
@@ -20,6 +24,9 @@ const Congrats = () => {
   // TODO: fix the toast position
   return (
     <div className={styles.wrapper}>
+      <div className={styles.charmCross}>
+        <img src={charmCross} onClick={() => navigate(-1)} />
+      </div>
       <div className={styles.headingCongrats} id={containerId}>
         Congrats your Quiz is Published!
       </div>

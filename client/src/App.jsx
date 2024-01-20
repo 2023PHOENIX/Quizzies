@@ -8,6 +8,8 @@ import DashBoard from "./pages/Dashboard/Dashboard.jsx";
 import Analytics from "./pages/Analytics/Analytics.jsx";
 import styles from "./app.module.css";
 import CreateQuiz from "./pages/createQuiz/CreateQuiz.jsx";
+import Quiz from "./pages/Quiz/Quiz.jsx";
+
 function App() {
   return (
     <div className={styles.app}>
@@ -19,6 +21,7 @@ function App() {
             <Route path="/create-quiz" element={<CreateQuiz />} />
           </Route>
           <Route path="/auth" element={<Auth />} />
+          <Route path="/quiz/:id" element={<Quiz />} />
         </Routes>
       </div>
     </div>

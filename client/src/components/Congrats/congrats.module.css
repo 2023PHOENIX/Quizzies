@@ -10,6 +10,14 @@
   align-items: center;
   font-weight: 600;
   margin-bottom: 5rem;
+
+  position: relative;
+}
+
+.charmCross {
+  top: 1rem;
+  right: 1rem;
+  position: absolute;
 }
 
 .headingCongrats {

@@ -1,0 +1,123 @@
+.wrapper {
+  border-radius: 0.9375rem;
+  background: #fff;
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.15);
+  width: 66.625rem;
+  height: 40.1875rem;
+  flex-shrink: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.quizData {
+  margin: 2rem 2rem;
+}
+.quizDetails {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 1rem;
+}
+.questionNumber {
+}
+
+.timer {
+  color: #d60000;
+}
+.question {
+  text-align: center;
+}
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.option {
+  width: 20.25rem;
+  height: 9.9375rem;
+  flex-shrink: 0;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+  background: #f0f0f0;
+}
+.textUrlContainer,
+.imageContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+
+  padding: 0 2rem;
+}
+.textOption {
+  width: 20rem;
+  height: 7rem;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+  background: #f0f0f0;
+  margin: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  font-size: 2.18rem;
+  font-weight: 600;
+}
+.imageOption,
+.textUrlOption {
+  width: 20.25rem;
+  height: 9.9375rem;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+  background: #f0f0f0;
+}
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.button {
+  border: none;
+  height: 3.5rem;
+  width: 20rem;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+  background: #60b84b;
+  color: #fff;
+  font-family: Poppins;
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.imgOption {
+  width: 8.5rem;
+  height: 7.5625rem;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+}
+
+.textUrlOption {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  font-size: 2.18rem;
+}
+
+.textUrlOption p {
+  width: calc(100% - 8.5rem);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  margin: 1rem;
+  color: #000;
+  font-size: 2.1rem;
+}
