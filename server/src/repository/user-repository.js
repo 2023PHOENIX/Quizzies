@@ -13,6 +13,23 @@ class UserRepository extends CrudRepository {
       throw e;
     }
   }
+
+  async appendQuiz(userId, quizId) {
+    try {
+      await User.findOneAndUpdate(userId, { $push: { quizzies: quizId } });
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async populatedQuizzies(userId) {
+    try {
+      const userDetails = await User.findById(userId).populate("quizzies");
+      return userDetails;
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 export default UserRepository;

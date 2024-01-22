@@ -3,6 +3,7 @@ import { signup, login } from "../../controllers/auth-controller.js";
 import { authenticateUser } from "../../middleware/auth-middleware.js";
 import {
   createQuiz,
+  dashBoard,
   getQuiz,
   submitQuizData,
 } from "../../controllers/quiz-controller.js";
@@ -18,7 +19,7 @@ router.post("/login", login);
 
 // WARN: routes with authentication
 router.post("/createQuiz", authenticateUser, createQuiz);
-
+router.get("/dashboard", authenticateUser, dashBoard);
 // WARN: routes with authorization
 
 // WARN: it should be public route.

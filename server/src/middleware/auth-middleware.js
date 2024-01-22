@@ -8,8 +8,8 @@ export const authenticateUser = async (req, res, next) => {
       const token = authHeader.split(" ")[1];
 
       const user = jwt.verify(token, process.env.jwtPrivateKey);
-
-      req.user = user;
+      console.log("middleware", user);
+      req.user = user.user;
       next();
     } else {
       throw new Error("unable to find the token please re-login");

@@ -6,7 +6,9 @@ const quizService = new QuizService();
 //TODO: after quiz creation need to send specific url to access that quiz.
 export const createQuiz = async (req, res, next) => {
   try {
-    const response = await quizService.createQuiz(req.body);
+    const data = req.body;
+    data.userId = req.user._id;
+    const response = await quizService.createQuiz(data);
     const quizUrl = `${URL}/api/v1/quiz/${response._id}`;
     res.status(200).json({
       success: true,
@@ -42,6 +44,19 @@ export const submitQuizData = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "your quiz data",
+      data: response,
+      err: {},
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+export const dashBoard = async (req, res, next) => {
+  try {
+    const response = await quizService.dashboard(req.user);
+    res.status(200).json({
+      success: true,
+      message: "your dashboard data",
       data: response,
       err: {},
     });
