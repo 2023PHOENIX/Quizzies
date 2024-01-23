@@ -4,7 +4,7 @@ import {
   PollRepository,
   UserRepository,
 } from "../repository/index.js";
-
+import Quiz from "../models/quiz.js";
 class QuizService {
   constructor() {
     this.quizRepository = new QuizRepository();
@@ -101,25 +101,6 @@ class QuizService {
   }
 
   // TODO: need quizCount and relative computationalData. and need to return Trending Quiz
-  async dashboard(user) {
-    try {
-      const userData = await this.userRepository.populatedQuizzies(user._id);
-      const quizzies = userData.quizzies;
-      let quizCreated = quizzies.length;
-      let totalQuestions = 0;
-      let totalImpression = 0;
-      quizzies.forEach((quiz) => {
-        totalQuestions += quiz.questions.length;
-        totalImpression += quiz.impressions;
-      });
-
-      quizzies.sort((a, b) => b.impressions - a.impressions);
-
-      return { quizCreated, totalQuestions, totalImpression, quizzies };
-    } catch (e) {
-      throw e;
-    }
-  }
 
   // HACK: should also be removed from user also.
   async removeQuiz(quizId, userId) {
@@ -137,6 +118,25 @@ class QuizService {
       await this.quizRepository.destory(quizId);
     } catch (e) {
       console.log("this is from remove quiz", e);
+      throw e;
+    }
+  }
+
+  // HACK:edit quiz if poll or quiz changed need to be changed in poll schema or quizSchema
+
+  async editQuiz(quizId, updatedQuizData) {
+    try {
+      const quiz = await Quiz.findById(quizId);
+      if (!quiz) {
+        throw new Error("quiz not found.");
+      }
+
+      if (quiz.quizType != updatedQuizData.quizType) {
+        // WARN: something need to be updated in poll and Q&A.
+      }
+      Object.assign(quiz, updatedQuizData);
+      quiz.save();
+    } catch (e) {
       throw e;
     }
   }

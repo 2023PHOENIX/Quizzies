@@ -6,6 +6,7 @@ import {
   createQuiz,
   dashBoard,
   deleteQuiz,
+  editQuiz,
   getQuiz,
   submitQuizData,
 } from "../../controllers/quiz-controller.js";
@@ -22,8 +23,12 @@ router.post("/login", login);
 // WARN: routes with authentication
 router.post("/quiz", authenticateUser, createQuiz);
 router.delete("/quiz/:id", authenticateUser, deleteQuiz);
+router.put("/quiz/:id", authenticateUser, editQuiz);
+
 router.get("/analytics", authenticateUser, analytics);
 router.get("/dashboard", authenticateUser, dashBoard);
+
+// TODO: need two more apis based upon Q&A and Poll their results.
 // WARN: routes with authorization
 
 // WARN: it should be public route.

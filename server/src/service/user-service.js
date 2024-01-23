@@ -68,9 +68,29 @@ class UserService {
     try {
       const userData = await this.userRepository.populatedQuizzies(user._id);
       const quizzies = userData.quizzies;
-
+      quizzies.sort((a, b) => b.createdAt - a.createdAt);
       // TODO: please check for some sorting or some other basisc.
       return quizzies;
+    } catch (e) {
+      throw e;
+    }
+  }
+  // TODO: need quizCount and relative computationalData. and need to return Trending Quiz
+  async dashboard(user) {
+    try {
+      const userData = await this.userRepository.populatedQuizzies(user._id);
+      const quizzies = userData.quizzies;
+      let quizCreated = quizzies.length;
+      let totalQuestions = 0;
+      let totalImpression = 0;
+      quizzies.forEach((quiz) => {
+        totalQuestions += quiz.questions.length;
+        totalImpression += quiz.impressions;
+      });
+
+      quizzies.sort((a, b) => b.impressions - a.impressions);
+
+      return { quizCreated, totalQuestions, totalImpression, quizzies };
     } catch (e) {
       throw e;
     }

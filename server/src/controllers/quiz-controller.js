@@ -55,7 +55,7 @@ export const submitQuizData = async (req, res, next) => {
 };
 export const dashBoard = async (req, res, next) => {
   try {
-    const response = await quizService.dashboard(req.user);
+    const response = await userService.dashboard(req.user);
     res.status(200).json({
       success: true,
       message: "your dashboard data",
@@ -87,6 +87,20 @@ export const deleteQuiz = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "removed quiz from DB",
+      data: response,
+      err: {},
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const editQuiz = async (req, res, next) => {
+  try {
+    const response = await quizService.editQuiz(req.params.id, req.body);
+    res.status(200).json({
+      success: true,
+      message: "updated the quiz",
       data: response,
       err: {},
     });
