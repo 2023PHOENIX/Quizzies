@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import User from "../models/user.js";
 
 export const authenticateUser = async (req, res, next) => {
   try {
@@ -7,10 +8,15 @@ export const authenticateUser = async (req, res, next) => {
     if (authHeader) {
       const token = authHeader.split(" ")[1];
 
-      const user = jwt.verify(token, process.env.jwtPrivateKey);
-      console.log("middleware", user);
-      req.user = user.user;
-      next();
+      const data = jwt.verify(token, process.env.jwtPrivateKey);
+
+      const user = await User.findOne({ email: data.email });
+      if (user) {
+        req.user = user;
+        next();
+      } else {
+        throw new Error("user is not available.please signup");
+      }
     } else {
       throw new Error("unable to find the token please re-login");
     }

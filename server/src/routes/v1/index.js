@@ -2,8 +2,10 @@ import express from "express";
 import { signup, login } from "../../controllers/auth-controller.js";
 import { authenticateUser } from "../../middleware/auth-middleware.js";
 import {
+  analytics,
   createQuiz,
   dashBoard,
+  deleteQuiz,
   getQuiz,
   submitQuizData,
 } from "../../controllers/quiz-controller.js";
@@ -18,7 +20,9 @@ router.post("/signup", signup);
 router.post("/login", login);
 
 // WARN: routes with authentication
-router.post("/createQuiz", authenticateUser, createQuiz);
+router.post("/quiz", authenticateUser, createQuiz);
+router.delete("/quiz/:id", authenticateUser, deleteQuiz);
+router.get("/analytics", authenticateUser, analytics);
 router.get("/dashboard", authenticateUser, dashBoard);
 // WARN: routes with authorization
 

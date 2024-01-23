@@ -53,6 +53,7 @@ class QuizService {
       throw e;
     }
   }
+
   // HACK: data will be array of choosen answer by user.
   async submit(id, userAnswers) {
     try {
@@ -104,7 +105,6 @@ class QuizService {
     try {
       const userData = await this.userRepository.populatedQuizzies(user._id);
       const quizzies = userData.quizzies;
-
       let quizCreated = quizzies.length;
       let totalQuestions = 0;
       let totalImpression = 0;
@@ -113,8 +113,30 @@ class QuizService {
         totalImpression += quiz.impressions;
       });
 
-      return { quizCreated, totalQuestions, totalImpression };
+      quizzies.sort((a, b) => b.impressions - a.impressions);
+
+      return { quizCreated, totalQuestions, totalImpression, quizzies };
     } catch (e) {
+      throw e;
+    }
+  }
+
+  // HACK: should also be removed from user also.
+  async removeQuiz(quizId, userId) {
+    try {
+      const quiz = await this.quizRepository.get(quizId);
+
+      await this.userRepository.removeQuiz(userId, quizId);
+      console.log(quiz.QuizType);
+      if (quiz.quizType === "Q&A") {
+        await this.qaRepository.destory(quizId);
+      } else if (quiz.quizType === "Poll") {
+        await this.pollRepository.destory(quizId);
+      }
+
+      await this.quizRepository.destory(quizId);
+    } catch (e) {
+      console.log("this is from remove quiz", e);
       throw e;
     }
   }

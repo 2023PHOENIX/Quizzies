@@ -30,6 +30,29 @@ class UserRepository extends CrudRepository {
       throw e;
     }
   }
+  async removeQuiz(userId, quizId) {
+    try {
+      const user = await User.findById(userId);
+
+      const indexToDelete = user.quizzies.findIndex((quiz) => quiz == quizId);
+
+      if (indexToDelete !== -1) {
+        user.quizzies.splice(indexToDelete, 1);
+        console.log(
+          `Quiz with quizId ${quizId} deleted successfully. from user`,
+        );
+      } else {
+        console.log("quiz not found in user");
+        throw new Error("quiz not found");
+      }
+
+      user.save();
+
+      return;
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 export default UserRepository;

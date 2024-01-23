@@ -19,9 +19,13 @@ class UserService {
       const user = await this.userRepository.create(data);
 
       if (user) {
-        const token = jwt.sign({ user: user }, process.env.jwtPrivateKey, {
-          expiresIn: "24h",
-        });
+        const token = jwt.sign(
+          { email: user.email },
+          process.env.jwtPrivateKey,
+          {
+            expiresIn: "24h",
+          },
+        );
         return { token: token };
       } else {
         throw new Error("user is not created.Please try again after some time");
@@ -41,16 +45,32 @@ class UserService {
         );
 
         if (isPasswordMatched) {
-          const token = jwt.sign({ user: user }, process.env.jwtPrivateKey, {
-            expiresIn: "24h",
-          });
-          return { token: token };
+          const token = jwt.sign(
+            { email: user.email },
+            process.env.jwtPrivateKey,
+            {
+              expiresIn: "24h",
+            },
+          );
+          return { token: token, user };
         } else {
           throw new Error("Password is incorrect");
         }
       } else {
         throw new Error("User does not exist");
       }
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async analysis(user) {
+    try {
+      const userData = await this.userRepository.populatedQuizzies(user._id);
+      const quizzies = userData.quizzies;
+
+      // TODO: please check for some sorting or some other basisc.
+      return quizzies;
     } catch (e) {
       throw e;
     }
