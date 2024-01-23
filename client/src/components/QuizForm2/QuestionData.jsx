@@ -97,7 +97,7 @@ const QuestionData = ({ data, setData, quizType }) => {
       <div className={styles.optionsToChoose}>
         {data?.options?.map((opData, index) => (
           <div className={styles.option} key={index}>
-            {quizType === "qa" && (
+            {quizType === "Q&A" && (
               <input
                 type="radio"
                 value={`option${index + 1}`}
@@ -115,7 +115,7 @@ const QuestionData = ({ data, setData, quizType }) => {
                       ? "Text"
                       : `${data?.choiceType}`
                   }
-                  className={`${styles.optionInput} ${quizType === "poll" ? styles.poll : ""
+                  className={`${styles.optionInput} ${quizType === "Poll" ? styles.poll : ""
                     }`}
                   style={
                     data?.choiceType === "text&image" ? { width: "11rem" } : {}

@@ -5,8 +5,10 @@ import QuizForm2 from "../../components/QuizForm2/QuizForm2";
 import Congrats from "../../components/Congrats/Congrats";
 
 const CreateQuiz = () => {
-  const [formChoices, setFormChoices] = useState();
+  const [formChoices, setFormChoices] = useState(null);
   const [quizCreated, setQuizCreated] = useState(false);
+  const [url, setUrl] = useState();
+  console.log(formChoices, quizCreated);
   return (
     <div className={styles.wrapper}>
       {!formChoices && (
@@ -20,11 +22,13 @@ const CreateQuiz = () => {
           <QuizForm2
             quizType={formChoices?.quizType}
             setQuizCreated={setQuizCreated}
+            formChoices={formChoices}
+            setUrl={setUrl}
           />
         </div>
       )}
 
-      {quizCreated && <Congrats />}
+      {quizCreated && <Congrats url={url} />}
     </div>
   );
 };

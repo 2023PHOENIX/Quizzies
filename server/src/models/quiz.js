@@ -11,7 +11,16 @@ const questionSchema = new mongoose.Schema({
     enum: ["Text", "url", "text&url"],
   },
   options: {
-    type: [String],
+    type: [
+      {
+        text: {
+          type: String,
+        },
+        url: {
+          type: String,
+        },
+      },
+    ],
     required: true,
   },
   correctAnswer: {

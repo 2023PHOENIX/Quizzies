@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styles from "./quizForm.module.css";
 import { useNavigate } from "react-router-dom";
+import { formContext } from "../../context/FormProvider.jsx";
 
 const QuizForm = ({ setFormChoices }) => {
   const [inputData, setInputData] = useState(null);
@@ -16,7 +17,7 @@ const QuizForm = ({ setFormChoices }) => {
       return;
     }
 
-    const quizType = picked == "1" ? "qa" : "poll";
+    const quizType = picked == "1" ? "Q&A" : "Poll";
     setFormChoices({ quizType: quizType, quizName: inputData });
   };
 
@@ -42,7 +43,7 @@ const QuizForm = ({ setFormChoices }) => {
         <button
           className={styles.buttonStyle}
           style={{ background: "#fff", color: "#474444" }}
-          onClick={() => navigate(-1)}
+          onClick={() => setForm(false)}
         >
           Cancel
         </button>

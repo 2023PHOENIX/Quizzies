@@ -3,21 +3,20 @@ import plus from "../../assets/plus.svg";
 import { v4 as uuidv4 } from "uuid";
 import cross from "../../assets/cross.svg";
 import QuestionData from "./QuestionData";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Timer from "../Timer/Timer";
 import { useEffect } from "react";
 import { generateDefaultData } from "../../data/questionDefaultData";
-
-const QuizForm2 = ({ quizType, setQuizCreated }) => {
+import { createQuiz } from "../../services/api/quizApi";
+import { formContext } from "../../context/FormProvider";
+const QuizForm2 = ({ quizType, setQuizCreated, formChoices, setUrl }) => {
   const [questionData, setQuestionData] = useState([generateDefaultData()]);
 
+  const { showForm, setForm } = useContext(formContext);
   const [selectedQuestionData, setSelectedQuestionData] = useState(
     questionData[0],
   );
 
-  console.log(questionData);
-
-  console.log(selectedQuestionData);
   const addQuestion = () => {
     setQuestionData((prevData) => [...prevData, generateDefaultData()]);
   };
@@ -30,16 +29,28 @@ const QuizForm2 = ({ quizType, setQuizCreated }) => {
     setQuestionData(updatedQuestionData);
   };
 
-  const updateUserInputQuestionData = () => { };
   // WARN: using index over here
 
   const changeSelectedQuestion = (index) => {
     setSelectedQuestionData(questionData[index]);
   };
 
-  const handleCreateQuiz = () => {
+  const handleCreateQuiz = async () => {
     // HACK: corner case: last question is not added till now
-    updateUserInputQuestionData();
+    const updatedQuestion = questionData.map((q) => ({
+      ...q,
+      optionType: q.choiceType,
+    }));
+    updatedQuestion.forEach((question) => {
+      delete question.choiceType;
+    });
+    const newQuizData = { ...formChoices, questions: updatedQuestion };
+
+    try {
+      const { data } = await createQuiz(newQuizData);
+      console.log(data);
+      setUrl(data.url);
+    } catch (e) { }
     setQuizCreated(true);
   };
   console.log(selectedQuestionData.id);
@@ -93,6 +104,7 @@ const QuizForm2 = ({ quizType, setQuizCreated }) => {
         <button
           className={styles.buttonStyle}
           style={{ background: "#fff", color: "#474444" }}
+          onClick={() => setForm(false)}
         >
           Cancel
         </button>

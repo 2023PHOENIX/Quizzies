@@ -7,7 +7,6 @@ import Home from "./pages/Home/Home.jsx";
 import DashBoard from "./pages/Dashboard/Dashboard.jsx";
 import Analytics from "./pages/Analytics/Analytics.jsx";
 import styles from "./app.module.css";
-import CreateQuiz from "./pages/createQuiz/CreateQuiz.jsx";
 import Quiz from "./pages/Quiz/Quiz.jsx";
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
           <Route path="/" element={<Home />}>
             <Route path="/dashboard" element={<DashBoard />} />
             <Route path="/analytics" element={<Analytics />} />
-            <Route path="/create-quiz" element={<CreateQuiz />} />
           </Route>
           <Route path="/auth" element={<Auth />} />
           <Route path="/quiz/:id" element={<Quiz />} />
