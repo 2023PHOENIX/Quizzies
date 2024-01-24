@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { generateDefaultData } from "../../data/questionDefaultData";
 import { createQuiz } from "../../services/api/quizApi";
 import { formContext } from "../../context/FormProvider";
+import { toast } from "react-toastify";
 const QuizForm2 = ({ quizType, setQuizCreated, formChoices, setUrl }) => {
   const [questionData, setQuestionData] = useState([generateDefaultData()]);
 
@@ -50,7 +51,9 @@ const QuizForm2 = ({ quizType, setQuizCreated, formChoices, setUrl }) => {
       const { data } = await createQuiz(newQuizData);
       console.log(data);
       setUrl(data.url);
-    } catch (e) { }
+    } catch (e) {
+      toast.error(e.response.data.message);
+    }
     setQuizCreated(true);
   };
   console.log(selectedQuestionData.id);
@@ -93,7 +96,7 @@ const QuizForm2 = ({ quizType, setQuizCreated, formChoices, setUrl }) => {
             />
           )}
         </div>
-        <p> Max 5 questions</p>
+        <div> Max 5 questions</div>
       </div>
       <QuestionData
         data={selectedQuestionData}

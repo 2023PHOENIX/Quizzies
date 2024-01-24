@@ -14,7 +14,7 @@ export const signup = async (data) => {
 export const login = async (data) => {
   try {
     const response = await axios.post(`${URL}/login`, data);
-    console.lgo(response.data);
+    console.log(response.data);
     return response.data;
   } catch (e) {
     throw e;

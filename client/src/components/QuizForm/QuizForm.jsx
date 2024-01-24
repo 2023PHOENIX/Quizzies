@@ -21,6 +21,7 @@ const QuizForm = ({ setFormChoices }) => {
     setFormChoices({ quizType: quizType, quizName: inputData });
   };
 
+  const { showForm, setForm } = useContext(formContext);
   return (
     <div className={styles.quizForm}>
       <input type="text" placeholder="Quiz Name" onChange={handleInputChange} />

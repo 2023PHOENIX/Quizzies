@@ -22,10 +22,10 @@ const SignupForm = () => {
   const handleSubmit = async () => {
     try {
       const { data } = await signup(userDetails);
-
-      if (data?.url) {
-        console.log("url recieved", data.url);
+      if (data.token) {
+        localStorage.setItem("token", data.token);
         toast.success("successfully submitted the form");
+        navigate("/dashboard");
       } else {
         toast.error("something went wrong");
       }

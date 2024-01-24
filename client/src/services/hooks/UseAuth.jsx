@@ -2,21 +2,19 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const UseAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("token") ? true : false,
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
+
     if (storedToken) {
       setIsLoggedIn(true);
-    }
-
-    if (!isLoggedIn) {
+    } else {
+      setIsLoggedIn(false);
       navigate("/auth");
     }
-  }, [navigate]);
+  }, [navigate, isLoggedIn]);
 
   return isLoggedIn;
 };

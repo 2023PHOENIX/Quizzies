@@ -4,9 +4,14 @@ import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useContext } from "react";
 import { formContext } from "../../context/FormProvider";
+import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const { showForm, setForm } = useContext(formContext);
-  console.log("SideBar");
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/auth");
+  };
   return (
     <div className={styles.sidebar}>
       <h1> QUIZZIE</h1>
@@ -22,7 +27,9 @@ const Sidebar = () => {
       </div>
 
       <img src={line} alt="line" className={styles.line} />
-      <div className={styles.logout}>Logout </div>
+      <div className={styles.logout} onClick={handleLogout}>
+        Logout{" "}
+      </div>
     </div>
   );
 };

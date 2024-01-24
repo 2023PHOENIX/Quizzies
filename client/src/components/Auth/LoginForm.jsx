@@ -1,6 +1,5 @@
 import { toast } from "react-toastify";
 import styles from "./auth.module.css";
-import axios from "axios";
 import { login } from "../../services/api/userApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +22,7 @@ const LoginForm = () => {
       if (data?.token) {
         console.log("token recieved", data.token);
         localStorage.setItem("token", data.token);
-        toast.success("successfully login...");
+        toast.success("successfully logged in");
         navigate("/dashboard");
       } else {
         toast.error("something went wrong");

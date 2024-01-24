@@ -1,12 +1,12 @@
 import styles from "./quizCard.module.css";
 import Eye from "../../../assets/eyeView.svg";
-const QuizCard = ({ quizName, views, createdAt }) => {
+const QuizCard = ({ quizName, createdAt, impressions }) => {
   return (
     <div className={styles.quizCard}>
       <div className={styles.quizDetails}>
         <div className={styles.quizName}>{quizName} </div>
         <div className={styles.views}>
-          {views}
+          {impressions}
           <img src={Eye} />
         </div>
       </div>

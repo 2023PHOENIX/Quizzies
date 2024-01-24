@@ -9,6 +9,9 @@ import Analytics from "./pages/Analytics/Analytics.jsx";
 import styles from "./app.module.css";
 import Quiz from "./pages/Quiz/Quiz.jsx";
 
+import "react-toastify/dist/ReactToastify.css";
+
+import { ToastContainer, toast } from "react-toastify";
 function App() {
   return (
     <div className={styles.app}>
@@ -22,6 +25,7 @@ function App() {
           <Route path="/quiz/:id" element={<Quiz />} />
         </Routes>
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -3,123 +3,94 @@ import styles from "./analytics.module.css";
 import edit from "../../../assets/edit.svg";
 import remove from "../../../assets/delete.svg";
 import share from "../../../assets/share.svg";
+import { useEffect, useState } from "react";
+import { analytics } from "../../../services/api/quizApi";
+import DeleteForm from "../../DeleteForm/DeleteForm";
+import { REACT_APP_BASE_URL } from "../../../../constant";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AnalysisTableCard = () => {
+  const [analyticsData, setAnalyticsData] = useState(null);
+  const [showDeleteForm, setDeleteForm] = useState(false);
+  const [selectedQuizId, setSelectedQuizId] = useState(null);
+  const formatCreatedAt = (date) => {
+    // Assuming createdAt is a valid Date object or a string
+    const createdAt = new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+
+    return createdAt;
+  };
+
+  const handleShareClick = async (id) => {
+    setSelectedQuizId(id);
+    const url = REACT_APP_BASE_URL || 3000;
+    const link = `${url}/quiz/${id}`;
+    try {
+      await navigator.clipboard.writeText(link);
+      toast.success("copied link");
+    } catch (e) {
+      toast.error(e.message);
+    }
+  };
+  const handleDeleteQuiz = (id) => {
+    setSelectedQuizId(id);
+    setDeleteForm(true);
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await analytics();
+      setAnalyticsData(data);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th>S.No</th>
-            <th>Quiz Name</th>
-            <th>Created on</th>
-            <th>Impression</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Quiz 1</td>
-            <td>01 Sep , 2023</td>
-            <td>345</td>
-            <td>
-              <img src={edit} />
-              <img src={remove} />
-              <img src={share} />
-            </td>
-            <td>Question Wise Analysis</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Quiz 2</td>
-            <td>04 Sep , 2023</td>
-            <td>667</td>
-            <td>
-              <img src={edit} />
-              <img src={remove} />
-              <img src={share} />
-            </td>
-            <td>Question Wise Analysis</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Quiz 3</td>
-            <td>06 Sep , 2023</td>
-            <td>1.6K</td>
-            <td>
-              <img src={edit} />
-              <img src={remove} />
-              <img src={share} />
-            </td>
-            <td className={styles.qa}>Question Wise Analysis</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Quiz 4</td>
-            <td>09 Sep , 2023</td>
-            <td>789</td>
-
-            <td>
-              <img src={edit} />
-              <img src={remove} />
-              <img src={share} />
-            </td>
-
-            <td className={styles.qa}>Question Wise Analysis</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Quiz 5</td>
-            <td>11 Sep , 2023</td>
-            <td>995</td>
-
-            <td>
-              <img src={edit} />
-              <img src={remove} />
-              <img src={share} />
-            </td>
-
-            <td className={styles.qa}>Question Wise Analysis</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Quiz 6</td>
-            <td>13 Sep , 2023</td>
-            <td>2.5K</td>
-            <td>
-              <img src={edit} />
-              <img src={remove} />
-              <img src={share} />
-            </td>
-            <td className={styles.qa}>Question Wise Analysis</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>Quiz 7</td>
-            <td>14 Sep , 2023</td>
-            <td>231</td>
-            <td>
-              <img src={edit} />
-              <img src={remove} />
-              <img src={share} />
-            </td>
-            <td className={styles.qa}>Question Wise Analysis</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>Quiz 8</td>
-            <td>17 Sep , 2023</td>
-            <td>1.3K</td>
-            <td>
-              <img src={edit} />
-              <img src={remove} />
-              <img src={share} />
-            </td>
-            <td className={styles.qa}>Question Wise Analysis</td>
-          </tr>
-        </tbody>
-      </table>
+      {
+        <table>
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Quiz Name</th>
+              <th>Created on</th>
+              <th>Impression</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {analyticsData?.map((data, index) => (
+              <tr key={data._id}>
+                <td>{index}</td>
+                <td>{data.quizName}</td>
+                <td>{formatCreatedAt(data.createdAt)}</td>
+                <td>{data.impressions}</td>
+                <td>
+                  <img src={edit} alt="Edit" />
+                  <img
+                    src={remove}
+                    alt="Remove"
+                    onClick={() => handleDeleteQuiz(data._id)}
+                  />
+                  <img
+                    src={share}
+                    alt="Share"
+                    onClick={() => handleShareClick(data._id)}
+                  />
+                </td>
+                <td>Question Wise Analysis</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      }
+      {showDeleteForm && (
+        <DeleteForm setDeleteForm={setDeleteForm} quizId={selectedQuizId} />
+      )}
     </div>
   );
 };

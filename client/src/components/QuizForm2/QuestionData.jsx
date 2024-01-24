@@ -84,9 +84,9 @@ const QuestionData = ({ data, setData, quizType }) => {
           <input
             type="radio"
             id="option3"
-            name="text&image"
+            name="text&url"
             className={styles.radioInput}
-            checked={data?.choiceType === "text&image"}
+            checked={data?.choiceType === "text&url"}
             onChange={handleQuestionTypeChange}
           />
           <label htmlFor="option3" className={styles.radioLabel}>
@@ -100,46 +100,48 @@ const QuestionData = ({ data, setData, quizType }) => {
             {quizType === "Q&A" && (
               <input
                 type="radio"
-                value={`option${index + 1}`}
-                checked={data?.correctAnswer === `option${index + 1}`}
+                value={`${index + 1}`}
+                checked={data?.correctAnswer === `${index + 1}`}
                 onChange={handleOptionChange}
                 className={styles.optionRadio}
               />
             )}{" "}
-            {(data?.choiceType === "text&image" ||
+            {(data?.choiceType === "text&url" ||
               data?.choiceType === "Text") && (
-                <input
-                  type="text"
-                  placeholder={
-                    data?.choiceType === "text&image"
-                      ? "Text"
-                      : `${data?.choiceType}`
-                  }
-                  className={`${styles.optionInput} ${quizType === "Poll" ? styles.poll : ""
-                    }`}
-                  style={
-                    data?.choiceType === "text&image" ? { width: "11rem" } : {}
-                  }
-                  value={opData.text}
-                  onChange={(e) =>
-                    handleInputChanges(opData.id, "text", e.target.value)
-                  }
-                />
-              )}
-            {(data?.choiceType === "text&image" ||
+              <input
+                type="text"
+                placeholder={
+                  data?.choiceType === "text&url"
+                    ? "Text"
+                    : `${data?.choiceType}`
+                }
+                className={`${styles.optionInput} ${
+                  quizType === "Poll" ? styles.poll : ""
+                }`}
+                style={
+                  data?.choiceType === "text&url" ? { width: "11rem" } : {}
+                }
+                value={opData.text}
+                onChange={(e) =>
+                  handleInputChanges(opData.id, "text", e.target.value)
+                }
+              />
+            )}
+            {(data?.choiceType === "text&url" ||
               data?.choiceType === "url") && (
-                <input
-                  type="text"
-                  placeholder="Image URL"
-                  value={opData?.url}
-                  className={`${styles.optionInput} ${quizType === "poll" ? styles.poll : ""
-                    }`}
-                  style={data?.choiceType == "url" ? {} : { width: "16rem" }}
-                  onChange={(e) =>
-                    handleInputChanges(opData.id, "url", e.target.value)
-                  }
-                />
-              )}
+              <input
+                type="text"
+                placeholder="Image URL"
+                value={opData?.url}
+                className={`${styles.optionInput} ${
+                  quizType === "poll" ? styles.poll : ""
+                }`}
+                style={data?.choiceType == "url" ? {} : { width: "16rem" }}
+                onChange={(e) =>
+                  handleInputChanges(opData.id, "url", e.target.value)
+                }
+              />
+            )}
             {index > 1 && (
               <div
                 className={styles.deleteBucket}

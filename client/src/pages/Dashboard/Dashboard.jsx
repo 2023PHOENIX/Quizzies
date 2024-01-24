@@ -1,30 +1,61 @@
+import { useEffect } from "react";
 import HeadingCard from "../../components/Dashboard/HeadingCard/HeadingCard.jsx";
 import QuizCard from "../../components/Dashboard/QuizCard/QuizCard.jsx";
 import styles from "./dashboard.module.css";
+import { useState } from "react";
+import { dashboard } from "../../services/api/quizApi.js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const DashBoard = () => {
+  const [dashBoardData, setDashboardData] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await dashboard();
+        console.log(data);
+        setDashboardData(data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(dashBoardData);
   return (
     <div className={styles.dashboard}>
       <div className={styles.headingDetails}>
-        <HeadingCard color="#FF5D01" text="Quiz created" counts={12} />
-        <HeadingCard color="#60B84B" text="questions Created" counts={110} />
-        <HeadingCard color="#5076FF" text="Total Impressions" counts={"1.4k"} />
+        <HeadingCard
+          color="#FF5D01"
+          text="Quiz created"
+          counts={dashBoardData?.quizCreated || "0"}
+        />
+        <HeadingCard
+          color="#60B84B"
+          text="questions Created"
+          counts={dashBoardData?.totalQuestions || "0"}
+        />
+        <HeadingCard
+          color="#5076FF"
+          text="Total Impressions"
+          counts={
+            dashBoardData?.totalImpression
+              ? `${dashBoardData?.totalImpression}K`
+              : "0"
+          }
+        />
       </div>
 
-      <h1 className={styles.headingQuiz}> Treding Quizs</h1>
+      <h1 className={styles.headingQuiz}>Treding Quizs</h1>
       <div className={styles.treadingQuiz}>
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
-        <QuizCard quizName={"Quiz 1"} views={120} createdAt={"05 sept 2023"} />
+        {dashBoardData?.trendingQuizData?.map((trendingQuiz) => (
+          <QuizCard
+            key={trendingQuiz._id}
+            quizName={trendingQuiz.quizName}
+            createdAt={trendingQuiz.createdAt}
+            impressions={trendingQuiz.impressions}
+          />
+        ))}
       </div>
     </div>
   );
