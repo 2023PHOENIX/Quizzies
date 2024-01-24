@@ -106,7 +106,9 @@ class QuizService {
   async removeQuiz(quizId, userId) {
     try {
       const quiz = await this.quizRepository.get(quizId);
-
+      if (!quiz) {
+        throw new Error("Quiz is not defined");
+      }
       await this.userRepository.removeQuiz(userId, quizId);
       console.log(quiz.QuizType);
       if (quiz.quizType === "Q&A") {

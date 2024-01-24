@@ -53,6 +53,31 @@ class UserRepository extends CrudRepository {
       throw e;
     }
   }
+
+  convertImpressions = (impression) => {
+    if (impression > 1000) {
+      const formattedImpression = (impression / 1000).toFixed(1);
+      return `${formattedImpression}`;
+    } else {
+      return impression.toString();
+    }
+  };
+
+  truncateQuizNameFn = (name, maxLength) => {
+    console.log(name, maxLength);
+    return name.length > maxLength ? `${name.slice(0, maxLength)}...` : name;
+  };
+
+  formatCreatedAt = (date) => {
+    // Assuming createdAt is a valid Date object or a string
+    const createdAt = new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+
+    return createdAt;
+  };
 }
 
 export default UserRepository;
