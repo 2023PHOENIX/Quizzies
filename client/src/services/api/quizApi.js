@@ -77,3 +77,19 @@ export const analysis = async (id) => {
     throw e;
   }
 };
+
+export const updateQuiz = async (id, data) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.put(`${URL}/quiz/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};

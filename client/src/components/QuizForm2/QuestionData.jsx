@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import styles from "./quizForm2.module.css";
 const QuestionData = ({ data, setData, quizType }) => {
+  console.log(data);
   const addOption = () => {
     setData((prevData) => ({
       ...prevData,
@@ -96,9 +97,10 @@ const QuestionData = ({ data, setData, quizType }) => {
       </div>
       <div className={styles.optionsToChoose}>
         {data?.options?.map((opData, index) => (
-          <div className={styles.option} key={index}>
+          <div className={styles.option} key={opData._id}>
             {quizType === "Q&A" && (
               <input
+                key={opData._id}
                 type="radio"
                 value={`${index + 1}`}
                 checked={data?.correctAnswer === `${index + 1}`}
@@ -108,40 +110,38 @@ const QuestionData = ({ data, setData, quizType }) => {
             )}{" "}
             {(data?.choiceType === "text&url" ||
               data?.choiceType === "Text") && (
-              <input
-                type="text"
-                placeholder={
-                  data?.choiceType === "text&url"
-                    ? "Text"
-                    : `${data?.choiceType}`
-                }
-                className={`${styles.optionInput} ${
-                  quizType === "Poll" ? styles.poll : ""
-                }`}
-                style={
-                  data?.choiceType === "text&url" ? { width: "11rem" } : {}
-                }
-                value={opData.text}
-                onChange={(e) =>
-                  handleInputChanges(opData.id, "text", e.target.value)
-                }
-              />
-            )}
+                <input
+                  type="text"
+                  placeholder={
+                    data?.choiceType === "text&url"
+                      ? "Text"
+                      : `${data?.choiceType}`
+                  }
+                  className={`${styles.optionInput} ${quizType === "Poll" ? styles.poll : ""
+                    }`}
+                  style={
+                    data?.choiceType === "text&url" ? { width: "11rem" } : {}
+                  }
+                  value={opData.text}
+                  onChange={(e) =>
+                    handleInputChanges(opData.id, "text", e.target.value)
+                  }
+                />
+              )}
             {(data?.choiceType === "text&url" ||
               data?.choiceType === "url") && (
-              <input
-                type="text"
-                placeholder="Image URL"
-                value={opData?.url}
-                className={`${styles.optionInput} ${
-                  quizType === "poll" ? styles.poll : ""
-                }`}
-                style={data?.choiceType == "url" ? {} : { width: "16rem" }}
-                onChange={(e) =>
-                  handleInputChanges(opData.id, "url", e.target.value)
-                }
-              />
-            )}
+                <input
+                  type="text"
+                  placeholder="Image URL"
+                  value={opData?.url}
+                  className={`${styles.optionInput} ${quizType === "poll" ? styles.poll : ""
+                    }`}
+                  style={data?.choiceType == "url" ? {} : { width: "16rem" }}
+                  onChange={(e) =>
+                    handleInputChanges(opData.id, "url", e.target.value)
+                  }
+                />
+              )}
             {index > 1 && (
               <div
                 className={styles.deleteBucket}

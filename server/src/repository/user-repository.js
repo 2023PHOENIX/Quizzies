@@ -57,14 +57,13 @@ class UserRepository extends CrudRepository {
   convertImpressions = (impression) => {
     if (impression > 1000) {
       const formattedImpression = (impression / 1000).toFixed(1);
-      return `${formattedImpression}`;
+      return `${formattedImpression}K`;
     } else {
       return impression.toString();
     }
   };
 
   truncateQuizNameFn = (name, maxLength) => {
-    console.log(name, maxLength);
     return name.length > maxLength ? `${name.slice(0, maxLength)}...` : name;
   };
 

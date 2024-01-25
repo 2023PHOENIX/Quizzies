@@ -7,13 +7,19 @@ import { useState, useContext } from "react";
 import Timer from "../Timer/Timer";
 import { useEffect } from "react";
 import { generateDefaultData } from "../../data/questionDefaultData";
-import { createQuiz } from "../../services/api/quizApi";
+import { createQuiz, updateQuiz } from "../../services/api/quizApi";
 import { formContext } from "../../context/FormProvider";
 import { toast } from "react-toastify";
-const QuizForm2 = ({ quizType, setQuizCreated, formChoices, setUrl }) => {
-  const [questionData, setQuestionData] = useState([generateDefaultData()]);
-
-  const { showForm, setForm } = useContext(formContext);
+const QuizForm2 = ({
+  quizType,
+  setQuizCreated,
+  formChoices,
+  setUrl,
+  questionData,
+  setQuestionData,
+  editForm,
+}) => {
+  const { setForm } = useContext(formContext);
   const [selectedQuestionData, setSelectedQuestionData] = useState(
     questionData[0],
   );
@@ -46,11 +52,17 @@ const QuizForm2 = ({ quizType, setQuizCreated, formChoices, setUrl }) => {
       delete question.choiceType;
     });
     const newQuizData = { ...formChoices, questions: updatedQuestion };
-
+    console.log(newQuizData);
     try {
-      const { data } = await createQuiz(newQuizData);
-      setUrl(data.url);
-      toast.success(data.message);
+      if (!editForm) {
+        const { data } = await createQuiz(newQuizData);
+        setUrl(data?.url);
+        toast.success(data?.message);
+      } else {
+        const { data } = await updateQuiz(formChoices.id, newQuizData);
+        console.log(data);
+        toast.success(data?.message);
+      }
     } catch (e) {
       toast.error(e.response.data.message);
     }

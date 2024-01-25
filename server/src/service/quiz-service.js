@@ -110,7 +110,6 @@ class QuizService {
         throw new Error("Quiz is not defined");
       }
       await this.userRepository.removeQuiz(userId, quizId);
-      console.log(quiz.QuizType);
       if (quiz.quizType === "Q&A") {
         await this.qaRepository.destory(quizId);
       } else if (quiz.quizType === "Poll") {
@@ -128,16 +127,16 @@ class QuizService {
 
   async editQuiz(quizId, updatedQuizData) {
     try {
-      const quiz = await Quiz.findById(quizId);
+      const quiz = await Quiz.findByIdAndUpdate(quizId, updatedQuizData, {
+        new: true,
+        runValidators: true,
+      });
+
       if (!quiz) {
-        throw new Error("quiz not found.");
+        throw new Error("Quiz not found.");
       }
 
-      if (quiz.quizType != updatedQuizData.quizType) {
-        // WARN: something need to be updated in poll and Q&A.
-      }
-      Object.assign(quiz, updatedQuizData);
-      quiz.save();
+      return quiz;
     } catch (e) {
       throw e;
     }

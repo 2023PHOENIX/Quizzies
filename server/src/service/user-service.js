@@ -67,9 +67,12 @@ class UserService {
   async analysis(user) {
     try {
       const userData = await this.userRepository.populatedQuizzies(user._id);
-      const quizzies = userData.quizzies;
-      quizzies.sort((a, b) => b.createdAt - a.createdAt);
+      let quizzies = userData.quizzies;
+
+      quizzies.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
       // TODO: please check for some sorting or some other basisc.
+
       return quizzies;
     } catch (e) {
       throw e;

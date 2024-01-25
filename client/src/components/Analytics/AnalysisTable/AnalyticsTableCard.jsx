@@ -10,12 +10,18 @@ import { REACT_APP_BASE_URL } from "../../../../constant";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import EditPage from "../../../pages/EditPage/EditPage";
+import { useContext } from "react";
 const AnalysisTableCard = () => {
   const [analyticsData, setAnalyticsData] = useState(null);
   const [showDeleteForm, setDeleteForm] = useState(false);
   const [selectedQuizId, setSelectedQuizId] = useState(null);
+  const [showEdit, setEdit] = useState(false);
+  const [currentIndexOfQuiz, setCurrentIndexOfQuiz] = useState(null);
+
   const formatCreatedAt = (date) => {
     // Assuming createdAt is a valid Date object or a string
+    //
     const createdAt = new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
@@ -41,6 +47,11 @@ const AnalysisTableCard = () => {
     setDeleteForm(true);
   };
 
+  const handleEditQuiz = (id, index) => {
+    setCurrentIndexOfQuiz(index);
+    setSelectedQuizId(id);
+    setEdit(true);
+  };
   const handleQuizAnalysis = (id) => {
     const url = `/analysis/${id}`;
     navigate(url);
@@ -71,13 +82,23 @@ const AnalysisTableCard = () => {
           </thead>
           <tbody>
             {analyticsData?.map((data, index) => (
-              <tr key={data._id}>
+              <tr key={index}>
                 <td>{index}</td>
                 <td>{data.quizName}</td>
                 <td>{formatCreatedAt(data.createdAt)}</td>
-                <td>{data?.impressions ? data.impressions : "0"}</td>
                 <td>
-                  <img src={edit} alt="Edit" />
+                  {!data?.impressions
+                    ? "0"
+                    : data?.impressions > 1000
+                      ? `${(data.impressions / 1000).toFixed(1)}K`
+                      : data.impressions}
+                </td>
+                <td>
+                  <img
+                    src={edit}
+                    alt="Edit"
+                    onClick={() => handleEditQuiz(data._id, index)}
+                  />
                   <img
                     src={remove}
                     alt="Remove"
@@ -100,6 +121,7 @@ const AnalysisTableCard = () => {
       {showDeleteForm && (
         <DeleteForm setDeleteForm={setDeleteForm} quizId={selectedQuizId} />
       )}
+      {showEdit && <EditPage quiz={analyticsData[currentIndexOfQuiz]} />}
     </div>
   );
 };
