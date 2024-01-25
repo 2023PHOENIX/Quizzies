@@ -3,6 +3,7 @@ import styles from "./auth.module.css";
 import { login } from "../../services/api/userApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginForm = () => {
   const [userInfo, setUserInfo] = useState({

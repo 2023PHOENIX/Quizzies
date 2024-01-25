@@ -61,3 +61,19 @@ export const deleteQuiz = async (id) => {
     throw e;
   }
 };
+
+export const analysis = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    const response = await axios.get(`${URL}/quizAnalysis/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response);
+    return response.data;
+  } catch (e) {
+    throw e;
+  }
+};

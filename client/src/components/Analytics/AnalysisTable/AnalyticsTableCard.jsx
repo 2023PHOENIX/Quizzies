@@ -9,6 +9,7 @@ import DeleteForm from "../../DeleteForm/DeleteForm";
 import { REACT_APP_BASE_URL } from "../../../../constant";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 const AnalysisTableCard = () => {
   const [analyticsData, setAnalyticsData] = useState(null);
   const [showDeleteForm, setDeleteForm] = useState(false);
@@ -23,7 +24,7 @@ const AnalysisTableCard = () => {
 
     return createdAt;
   };
-
+  const navigate = useNavigate();
   const handleShareClick = async (id) => {
     setSelectedQuizId(id);
     const url = REACT_APP_BASE_URL || 3000;
@@ -39,9 +40,15 @@ const AnalysisTableCard = () => {
     setSelectedQuizId(id);
     setDeleteForm(true);
   };
+
+  const handleQuizAnalysis = (id) => {
+    const url = `/analysis/${id}`;
+    navigate(url);
+  };
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await analytics();
+      console.log(data);
       setAnalyticsData(data);
     };
 
@@ -68,7 +75,7 @@ const AnalysisTableCard = () => {
                 <td>{index}</td>
                 <td>{data.quizName}</td>
                 <td>{formatCreatedAt(data.createdAt)}</td>
-                <td>{data.impressions}</td>
+                <td>{data?.impressions ? data.impressions : "0"}</td>
                 <td>
                   <img src={edit} alt="Edit" />
                   <img
@@ -82,7 +89,9 @@ const AnalysisTableCard = () => {
                     onClick={() => handleShareClick(data._id)}
                   />
                 </td>
-                <td>Question Wise Analysis</td>
+                <td onClick={() => handleQuizAnalysis(data._id)}>
+                  <a className={styles.anchor}>Question Wise Analysis </a>
+                </td>
               </tr>
             ))}
           </tbody>

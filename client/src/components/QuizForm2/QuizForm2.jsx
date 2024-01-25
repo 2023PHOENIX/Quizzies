@@ -49,8 +49,8 @@ const QuizForm2 = ({ quizType, setQuizCreated, formChoices, setUrl }) => {
 
     try {
       const { data } = await createQuiz(newQuizData);
-      console.log(data);
       setUrl(data.url);
+      toast.success(data.message);
     } catch (e) {
       toast.error(e.response.data.message);
     }

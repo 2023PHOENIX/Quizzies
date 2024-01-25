@@ -45,3 +45,6 @@ th:first-child {
   align-items: center;
   padding-top: 3rem;
 }
+.anchor {
+  text-decoration: underline;
+}

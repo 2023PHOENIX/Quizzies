@@ -40,7 +40,7 @@ const DashBoard = () => {
           text="Total Impressions"
           counts={
             dashBoardData?.totalImpression
-              ? `${dashBoardData?.totalImpression}K`
+              ? `${dashBoardData.totalImpression}`
               : "0"
           }
         />
