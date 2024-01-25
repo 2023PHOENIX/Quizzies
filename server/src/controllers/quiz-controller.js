@@ -108,3 +108,17 @@ export const editQuiz = async (req, res, next) => {
     next(e);
   }
 };
+
+export const quizAnalysis = async (req, res, next) => {
+  try {
+    const response = await quizService.quizAnalysis(req.params.id);
+    res.status(200).json({
+      success: true,
+      message: "quiz analysis",
+      data: response,
+      err: {},
+    });
+  } catch (e) {
+    next(e);
+  }
+};

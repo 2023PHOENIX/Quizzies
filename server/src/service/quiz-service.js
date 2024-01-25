@@ -142,6 +142,27 @@ class QuizService {
       throw e;
     }
   }
+
+  async quizAnalysis(quizId) {
+    try {
+      const quiz = await this.quizRepository.get(quizId);
+
+      if (!quiz) {
+        throw new Error("quiz not found.");
+      }
+
+      if (quiz.quizType == "Q&A") {
+        const quizAnalysis = await this.qaRepository.get(quizId);
+
+        return { quiz, quizAnalysis };
+      } else if (quiz.quizType == "Poll") {
+        const quizAnalysis = await this.pollRepository.get(quizId);
+        return { quiz, quizAnalysis };
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 export default QuizService;
