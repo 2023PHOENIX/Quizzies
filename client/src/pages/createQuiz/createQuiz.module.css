@@ -25,3 +25,7 @@
   background: #fff;
   margin-bottom: 5rem;
 }
+
+.selectedQuestion {
+  border: 1rem solid blue;
+}

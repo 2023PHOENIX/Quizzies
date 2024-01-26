@@ -105,8 +105,8 @@
 
 .crossBtn {
   position: absolute;
-  right: 0.1rem;
-  top: -0.2rem;
+  right: 0rem;
+  top: -0.4rem;
 }
 
 .deleteBucket {
@@ -124,4 +124,8 @@
 
 .poll {
   margin-left: 2rem;
+}
+
+.selectedQuestion {
+  border: 0.1rem solid #d9d9d9;
 }

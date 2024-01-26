@@ -96,7 +96,10 @@ const QuizForm2 = ({
           {questionData &&
             questionData.map((qd, i) => (
               <div
-                className={styles.qNum}
+                className={`${styles.qNum} ${qd.id === selectedQuestionData.id
+                    ? styles.selectedQuestion
+                    : ""
+                  }`}
                 key={qd.id}
                 onClick={() => changeSelectedQuestion(i)}
               >

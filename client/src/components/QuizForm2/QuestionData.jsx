@@ -134,7 +134,7 @@ const QuestionData = ({ data, setData, quizType }) => {
                   type="text"
                   placeholder="Image URL"
                   value={opData?.url}
-                  className={`${styles.optionInput} ${quizType === "poll" ? styles.poll : ""
+                  className={`${styles.optionInput} ${quizType === "Poll" ? styles.poll : ""
                     }`}
                   style={data?.choiceType == "url" ? {} : { width: "16rem" }}
                   onChange={(e) =>
