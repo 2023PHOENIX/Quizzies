@@ -1,6 +1,7 @@
 import trophy from "../../../assets/trophy.png";
 import styles from "./quiz.result.module.css";
-const QuizResult = ({ quizType }) => {
+const QuizResult = () => {
+  const [quizType, setquizType] = useState("q&a");
   return (
     <div className={styles.wrapper}>
       {quizType === "q&a" && (

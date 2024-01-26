@@ -84,8 +84,9 @@
 .imgOption {
   width: 8.5rem;
   height: 7.5625rem;
-  flex-shrink: 0;
   border-radius: 0.625rem;
+  overflow: hidden;
+  object-fit: cover;
 }
 
 .textUrlOption {
@@ -94,6 +95,8 @@
   justify-content: center;
   align-items: center;
   font-size: 2.18rem;
+  padding-right: 1.3rem;
+  padding-left: 0.84rem;
 }
 
 .textUrlOption p {
@@ -103,9 +106,15 @@
   align-items: center;
   justify-content: center;
   text-align: left;
-  margin: 1rem;
+
   color: #000;
   font-size: 2.1rem;
+}
+
+.selectedOption {
+  border-radius: 0.625rem;
+  border: 5px solid #5076ff;
+  background: #f0f0f0;
 }
 
 @media (max-width: 600px) {

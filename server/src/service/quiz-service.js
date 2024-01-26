@@ -49,8 +49,18 @@ class QuizService {
   async get(id) {
     try {
       const response = await this.quizRepository.get(id);
+
+      const modifiedQuestions = response.questions.map((question) => {
+        const { correctAnswer, ...rest } = question.toObject();
+        return rest;
+      });
+
+      const { questions, ...finalResponse } = response.toObject();
+
+      finalResponse.questions = modifiedQuestions;
       await this.quizRepository.incrementImpression(id);
-      return response;
+
+      return finalResponse;
     } catch (e) {
       throw e;
     }
@@ -60,7 +70,7 @@ class QuizService {
   async submit(id, userAnswers) {
     try {
       const quiz = await this.quizRepository.get(id);
-
+      console.log(id, userAnswers, quiz);
       if (!quiz) {
         throw new Error("Quiz or Qa not found");
       }

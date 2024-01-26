@@ -93,3 +93,23 @@ export const updateQuiz = async (id, data) => {
     throw e;
   }
 };
+
+export const fetchQuizData = async (id) => {
+  try {
+    const response = await axios.get(`${URL}/quiz/${id}`);
+    return response.data;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
+
+export const submitQuiz = async (id, data) => {
+  try {
+    const response = await axios.post(`${URL}/quiz/${id}`, data);
+    return response.data;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
