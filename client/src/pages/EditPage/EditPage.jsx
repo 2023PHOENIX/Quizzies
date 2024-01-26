@@ -30,6 +30,7 @@ const EditPage = ({ quiz }) => {
       id: quiz._id,
       quizName: quiz.quizName,
       quizType: quiz.quizType,
+      timer: quiz.timer ? quiz.timer : "OFF",
     });
   }, []);
 
@@ -47,6 +48,7 @@ const EditPage = ({ quiz }) => {
               setUrl={setUrl}
               editForm={editForm}
               setEditForm={setEditForm}
+              setFormChoices={setFormChoices}
             />
           )}
         </div>

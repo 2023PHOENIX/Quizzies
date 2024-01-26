@@ -28,6 +28,7 @@ const CreateQuiz = () => {
             formChoices={formChoices}
             setUrl={setUrl}
             editForm={false}
+            setFormChoices={setFormChoices}
           />
         </div>
       )}

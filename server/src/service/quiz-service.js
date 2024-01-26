@@ -16,6 +16,8 @@ class QuizService {
   // TODO: add the reference of the quiz to user quiz array.
   async createQuiz(data) {
     try {
+      console.log("from create quiz");
+      console.log(data);
       const response = await this.quizRepository.create(data);
 
       if (response.quizType === "Q&A") {

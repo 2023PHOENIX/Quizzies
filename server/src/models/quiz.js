@@ -50,7 +50,12 @@ const quizSchema = new mongoose.Schema(
       required: true,
       enum: ["Q&A", "Poll"],
     },
-
+    timer: {
+      type: String,
+      required: true,
+      enum: ["OFF", "5 sec", "10 sec"],
+      default: "OFF",
+    },
     questions: {
       type: [questionSchema],
     },

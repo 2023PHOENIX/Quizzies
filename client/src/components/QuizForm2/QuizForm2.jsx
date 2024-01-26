@@ -19,6 +19,7 @@ const QuizForm2 = ({
   setQuestionData,
   editForm,
   setEditForm,
+  setFormChoices,
 }) => {
   const { setForm } = useContext(formContext);
   const [selectedQuestionData, setSelectedQuestionData] = useState(
@@ -61,7 +62,7 @@ const QuizForm2 = ({
         toast.success(data?.message);
       } else {
         const { data } = await updateQuiz(formChoices.id, newQuizData);
-        console.log(data);
+        console.log("this is whole data ->", data);
         toast.success(data?.message);
         setEditForm(false);
       }
@@ -141,7 +142,9 @@ const QuizForm2 = ({
           {!editForm ? "Create Quiz" : "Update Quiz"}
         </button>
       </div>
-      {quizType == "qa" && <Timer />}
+      {quizType == "Q&A" && !editForm && (
+        <Timer formChoices={formChoices} setFormChoices={setFormChoices} />
+      )}
     </div>
   );
 };
