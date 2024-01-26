@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import EditPage from "../../../pages/EditPage/EditPage";
 import { useContext } from "react";
+import { formContext } from "../../../context/FormProvider";
 const AnalysisTableCard = () => {
   const [analyticsData, setAnalyticsData] = useState(null);
   const [showDeleteForm, setDeleteForm] = useState(false);

@@ -15,8 +15,7 @@ const EditPage = ({ quiz }) => {
   const [url, setUrl] = useState();
   const [questionData, setQuestionData] = useState(null);
 
-  const { showForm, setForm } = useContext(formContext);
-
+  const [editForm, setEditForm] = useState(true);
   useEffect(() => {
     const updatedQuiz = {
       ...quiz,
@@ -35,21 +34,24 @@ const EditPage = ({ quiz }) => {
   }, []);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.popupForm2}>
-        {questionData && (
-          <QuizForm2
-            questionData={questionData}
-            setQuestionData={setQuestionData}
-            quizType={formChoices?.quizType}
-            setQuizCreated={setQuizCreated}
-            formChoices={formChoices}
-            setUrl={setUrl}
-            editForm={true}
-          />
-        )}
+    editForm && (
+      <div className={styles.wrapper}>
+        <div className={styles.popupForm2}>
+          {questionData && (
+            <QuizForm2
+              questionData={questionData}
+              setQuestionData={setQuestionData}
+              quizType={formChoices?.quizType}
+              setQuizCreated={setQuizCreated}
+              formChoices={formChoices}
+              setUrl={setUrl}
+              editForm={editForm}
+              setEditForm={setEditForm}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    )
   );
 };
 

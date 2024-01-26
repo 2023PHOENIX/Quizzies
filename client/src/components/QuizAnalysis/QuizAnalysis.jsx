@@ -19,14 +19,16 @@ const QuizAnalysis = () => {
     }
     fetchData();
   }, []);
+
+  console.log(QuizAnalysis, quiz);
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.quizHeading}>{quiz?.quizName}</h1>
       <div className={styles.questions}>
         {quiz?.questions?.map((q, i) => (
-          <div className={styles.question}>
-            <h2> {q.title} </h2>
-            {
+          <div className={styles.question} key={q._id}>
+            <h2>{q.title}</h2>
+            {quiz.quizType === "Q&A" && (
               <div className={styles.options}>
                 <div className={styles.optionCard}>
                   <div className={styles.Answer}>
@@ -35,7 +37,7 @@ const QuizAnalysis = () => {
                       }`}
                   </div>
                   <div className={styles.optionTitle}>
-                    people Attempted the questions{" "}
+                    people Attempted the questions
                   </div>
                 </div>
                 <div className={styles.optionCard}>
@@ -55,7 +57,18 @@ const QuizAnalysis = () => {
                   </div>
                 </div>
               </div>
-            }
+            )}
+
+            {quiz.quizType === "Poll" && (
+              <div className={styles.options}>
+                {QuizAnalysis.questions[i].map((v, x) => (
+                  <div className={`${styles.pollCard}`} key={x}>
+                    <div className={styles.pollAnswer}>{v + 1} </div>
+                    <div className={styles.optionTitle}>Option {x + 1} </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>

@@ -18,6 +18,7 @@ const QuizForm2 = ({
   questionData,
   setQuestionData,
   editForm,
+  setEditForm,
 }) => {
   const { setForm } = useContext(formContext);
   const [selectedQuestionData, setSelectedQuestionData] = useState(
@@ -62,11 +63,20 @@ const QuizForm2 = ({
         const { data } = await updateQuiz(formChoices.id, newQuizData);
         console.log(data);
         toast.success(data?.message);
+        setEditForm(false);
       }
     } catch (e) {
       toast.error(e.response.data.message);
     }
     setQuizCreated(true);
+  };
+
+  const handleCancleQuiz = () => {
+    if (editForm) {
+      setEditForm(false);
+    } else {
+      setForm(false);
+    }
   };
   console.log(selectedQuestionData.id);
   useEffect(() => {
@@ -119,7 +129,7 @@ const QuizForm2 = ({
         <button
           className={styles.buttonStyle}
           style={{ background: "#fff", color: "#474444" }}
-          onClick={() => setForm(false)}
+          onClick={handleCancleQuiz}
         >
           Cancel
         </button>
@@ -128,7 +138,7 @@ const QuizForm2 = ({
           style={{ background: "#60B84B", color: "#fff" }}
           onClick={handleCreateQuiz}
         >
-          Create Quiz
+          {!editForm ? "Create Quiz" : "Update Quiz"}
         </button>
       </div>
       {quizType == "qa" && <Timer />}

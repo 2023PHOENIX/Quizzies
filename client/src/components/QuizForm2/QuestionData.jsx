@@ -107,7 +107,7 @@ const QuestionData = ({ data, setData, quizType }) => {
                 onChange={handleOptionChange}
                 className={styles.optionRadio}
               />
-            )}{" "}
+            )}
             {(data?.choiceType === "text&url" ||
               data?.choiceType === "Text") && (
                 <input
