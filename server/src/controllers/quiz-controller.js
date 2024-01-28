@@ -11,11 +11,10 @@ export const createQuiz = async (req, res, next) => {
     const data = req.body;
     data.userId = req.user._id;
     const response = await quizService.createQuiz(data);
-    const quizUrl = `${URL}/api/v1/quiz/${response._id}`;
     res.status(200).json({
       success: true,
       message: "Successfully created new quiz",
-      data: { url: quizUrl },
+      data: { quizId: response._id },
       err: {},
     });
   } catch (e) {

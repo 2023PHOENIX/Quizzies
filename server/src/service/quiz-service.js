@@ -16,10 +16,11 @@ class QuizService {
   // TODO: add the reference of the quiz to user quiz array.
   async createQuiz(data) {
     try {
-      console.log("from create quiz");
-      console.log(data);
       const response = await this.quizRepository.create(data);
 
+      if (!response) {
+        throw new Error("Something went wrong during the creation of the data");
+      }
       if (response.quizType === "Q&A") {
         const qa = await this.qaRepository.create({ _id: response._id });
         for (let i = 0; i < response.questions.length; i++) {
@@ -38,6 +39,7 @@ class QuizService {
         poll.save();
       }
       await this.userRepository.appendQuiz(response.userId, response._id);
+      console.log(response);
 
       return response;
     } catch (e) {
@@ -50,6 +52,9 @@ class QuizService {
     try {
       const response = await this.quizRepository.get(id);
 
+      if (!response) {
+        throw new Error("unable to find the quiz");
+      }
       const modifiedQuestions = response.questions.map((question) => {
         const { correctAnswer, ...rest } = question.toObject();
         return rest;
@@ -81,15 +86,25 @@ class QuizService {
         if (!qa) {
           throw new Error("qa not found");
         }
+
+        let correctAnswer = 0;
+        let incorrectAnswer = 0;
         quiz.questions.forEach((question, i) => {
           // populate the qa if question array doesn't exist.
           if (parseInt(question.correctAnswer) === parseInt(userAnswers[i])) {
             qa.questions[i].correctAttempt++;
+            correctAnswer++;
           } else {
             qa.questions[i].incorrectAttempt++;
+            incorrectAnswer++;
           }
         });
         await qa.save();
+
+        return {
+          correctAnswer: correctAnswer,
+          incorrectAnswer: incorrectAnswer,
+        };
         // submit the quiz will update the answers.
       } else if (quiz && quiz.quizType === "Poll") {
         const poll = await this.pollRepository.get(id);
@@ -108,6 +123,7 @@ class QuizService {
         poll.save();
       }
     } catch (e) {
+      console.log(e.message);
       throw e;
     }
   }
@@ -147,7 +163,32 @@ class QuizService {
       if (!quiz) {
         throw new Error("Quiz not found.");
       }
+      if (quiz.quizType === "Q&A") {
+        const qa = await this.qaRepository.get(quizId);
 
+        if (!qa) {
+          throw new Error("please re-create the quiz");
+        }
+        for (let i = qa.questions.length; i < quiz.questions.length; i++) {
+          qa.questions[i] = { correctAttempt: 0, incorrectAttempt: 0 };
+        }
+
+        qa.save();
+      } else if (quiz.quizType === "Poll") {
+        const poll = await this.pollRepository.get(quizId);
+
+        if (!poll) {
+          throw new Error("Please re-create the quiz");
+        }
+
+        for (let i = poll.questions.length; i < quiz.questions.length; i++) {
+          poll.questions[i] = new Array(quiz.questions[i].options.length).fill(
+            0,
+          );
+
+          poll.save();
+        }
+      }
       return quiz;
     } catch (e) {
       throw e;

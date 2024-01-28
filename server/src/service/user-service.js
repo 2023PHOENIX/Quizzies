@@ -67,6 +67,10 @@ class UserService {
   async analysis(user) {
     try {
       const userData = await this.userRepository.populatedQuizzies(user._id);
+
+      if (!userData) {
+        throw new Error("user data not found out");
+      }
       let quizzies = userData.quizzies;
 
       quizzies.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
@@ -82,6 +86,10 @@ class UserService {
   async dashboard(user) {
     try {
       const userData = await this.userRepository.populatedQuizzies(user._id);
+
+      if (!userData) {
+        throw new Error("user data not found out");
+      }
       const quizzies = userData.quizzies;
       let quizCreated = quizzies.length;
       let totalQuestions = 0;
