@@ -3,6 +3,7 @@ import quizLine from "../../assets/quizLine.png";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { analysis } from "../../services/api/quizApi";
+import { formatCreatedAt } from "../../services/utils/utilFn";
 const QuizAnalysis = () => {
   const [quiz, setQuiz] = useState(null);
   const [QuizAnalysis, setQuizAnalysis] = useState(null);
@@ -19,15 +20,24 @@ const QuizAnalysis = () => {
     }
     fetchData();
   }, []);
-
   console.log(QuizAnalysis, quiz);
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.quizHeading}>{quiz?.quizName}</h1>
+      <h1 className={styles.quizHeading}>{quiz?.quizName}</h1>{" "}
+      <div className={styles.quizExtraDetails}>
+        <div className={styles.createdAt}>
+          Created on : {formatCreatedAt(quiz?.createdAt)}
+        </div>
+        <div className={styles.impressions}>
+          impressions : {quiz?.impressions}
+        </div>
+      </div>
       <div className={styles.questions}>
         {quiz?.questions?.map((q, i) => (
           <div className={styles.question} key={q._id}>
-            <h2>{q.title}</h2>
+            <h2>
+              Q.{i + 1} {q.title}
+            </h2>
             {quiz.quizType === "Q&A" && (
               <div className={styles.options}>
                 <div className={styles.optionCard}>
@@ -62,13 +72,14 @@ const QuizAnalysis = () => {
             {quiz.quizType === "Poll" && (
               <div className={styles.options}>
                 {QuizAnalysis.questions[i].map((v, x) => (
-                  <div className={`${styles.pollCard}`} key={x}>
-                    <div className={styles.pollAnswer}>{v + 1} </div>
+                  <div className={styles.pollCard} key={x}>
+                    <div className={styles.pollAnswer}>{v} </div>
                     <div className={styles.optionTitle}>Option {x + 1} </div>
                   </div>
                 ))}
               </div>
             )}
+            <img src={quizLine} className={styles.lineQuiz} />
           </div>
         ))}
       </div>

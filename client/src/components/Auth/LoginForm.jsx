@@ -1,9 +1,8 @@
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import styles from "./auth.module.css";
 import { login } from "../../services/api/userApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
 
 const LoginForm = () => {
   const [userInfo, setUserInfo] = useState({
@@ -57,7 +56,7 @@ const LoginForm = () => {
         </div>
 
         <button className={styles.button} onClick={handleSubmit}>
-          Log in{" "}
+          Log in
         </button>
       </div>
     </div>

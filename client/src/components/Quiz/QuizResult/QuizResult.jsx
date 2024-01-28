@@ -1,3 +1,4 @@
+import { useState } from "react";
 import trophy from "../../../assets/trophy.png";
 import styles from "./quiz.result.module.css";
 const QuizResult = () => {

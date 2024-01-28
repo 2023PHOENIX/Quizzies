@@ -11,6 +11,7 @@ const Quiz = () => {
   const [finalPage, setFinalPage] = useState(false);
   const [questionData, setQuestionsData] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState();
+  const [timer, setTimer] = useState("OFF");
   const [userAnswer, setUserAnswer] = useState();
   useEffect(() => {
     async function fetchData() {
@@ -21,6 +22,7 @@ const Quiz = () => {
         if (data) {
           setQuestionsData(data?.questions);
           setCurrentQuestion(0);
+          setTimer(data.timer);
         }
       } catch (e) {
         toast.error(e);
@@ -40,6 +42,8 @@ const Quiz = () => {
               currentQuestion={currentQuestion}
               setCurrentQuestion={setCurrentQuestion}
               questionData={questionData}
+              setFinalPage={setFinalPage}
+              timer={timer}
             />
           )}
 

@@ -8,14 +8,12 @@ table {
 
 th,
 td {
-  padding: 5px;
+  height: 2.4rem;
   text-align: center;
-  padding-right: 65px;
+  padding: 0 1.2rem;
 }
 th {
   background-color: #5076ff;
-  padding-top: 8px;
-  padding-bottom: 8px;
   color: #fff;
 }
 
@@ -24,16 +22,16 @@ tr:nth-child(even) {
 }
 
 th:last-child {
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 0.5rem 0.5rem 0;
 }
 td:last-child {
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 0.5rem 0.5rem 0;
 }
 td:first-child {
-  border-radius: 10px 0 0 10px;
+  border-radius: 0.5rem 0 0 0.5rem;
 }
 th:first-child {
-  border-radius: 10px 0 0 10px;
+  border-radius: 0.5rem 0 0 0.5rem;
 }
 .wrapper {
   position: fixed;

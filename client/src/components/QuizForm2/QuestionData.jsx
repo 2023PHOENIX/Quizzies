@@ -40,8 +40,7 @@ const QuestionData = ({ data, setData, quizType }) => {
       }));
     }
   };
-
-  console.log(data?.choiceType);
+  console.log(data);
   return (
     <>
       <input
@@ -95,6 +94,7 @@ const QuestionData = ({ data, setData, quizType }) => {
           </label>
         </div>
       </div>
+
       <div className={styles.optionsToChoose}>
         {data?.options?.map((opData, index) => (
           <div className={styles.option} key={opData._id}>
@@ -117,11 +117,11 @@ const QuestionData = ({ data, setData, quizType }) => {
                       ? "Text"
                       : `${data?.choiceType}`
                   }
-                  className={`${styles.optionInput} ${quizType === "Poll" ? styles.poll : ""
-                    }`}
-                  style={
-                    data?.choiceType === "text&url" ? { width: "11rem" } : {}
-                  }
+                  className={`${styles.optionInput} 
+                    ${quizType === "Poll" ? styles.poll : ""
+                    }                    
+${data.correctAnswer === `${index + 1}` ? styles.correctAnswerStyle : ""}
+                                   `}
                   value={opData.text}
                   onChange={(e) =>
                     handleInputChanges(opData.id, "text", e.target.value)
@@ -135,8 +135,14 @@ const QuestionData = ({ data, setData, quizType }) => {
                   placeholder="Image URL"
                   value={opData?.url}
                   className={`${styles.optionInput} ${quizType === "Poll" ? styles.poll : ""
-                    }`}
-                  style={data?.choiceType == "url" ? {} : { width: "16rem" }}
+                    }
+${data.correctAnswer === `${index + 1}` ? styles.correctAnswerStyle : ""}
+
+
+                    `}
+                  style={{
+                    width: data?.choiceType === "url" ? undefined : "16rem",
+                  }}
                   onChange={(e) =>
                     handleInputChanges(opData.id, "url", e.target.value)
                   }

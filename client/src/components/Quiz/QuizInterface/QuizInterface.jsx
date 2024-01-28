@@ -3,15 +3,20 @@ import styles from "./quiz.module.css";
 import { useEffect } from "react";
 import { submitQuiz } from "../../../services/api/quizApi";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 const QuizInterface = ({
   currentQuestion,
   setCurrentQuestion,
   questionData,
+  setFinalPage,
+  timer,
 }) => {
   const [lastQuestion, setLastQuestion] = useState(false);
   const [userAnswer, setUserAnswer] = useState([]);
   const [selectedOption, setSelectedOption] = useState(0);
+  const [timeLimit, setTimeLimit] = useState(
+    timer == "OFF" ? null : parseInt(timer),
+  );
 
   const { id } = useParams();
   const handleNextClick = () => {
@@ -31,6 +36,7 @@ const QuizInterface = ({
       const userResponse = {
         userAnswers: userAnswer,
       };
+      console.log(userResponse.userAnswers);
       const response = await submitQuiz(id, userResponse);
       console.log("data", response);
       if (response.success) {
@@ -42,6 +48,8 @@ const QuizInterface = ({
       console.log(e);
       toast.error(e.message);
     }
+
+    setFinalPage(true);
   };
   const handleSelectedOptionChange = (i) => {
     setSelectedOption(i);
@@ -58,6 +66,31 @@ const QuizInterface = ({
     }
   }, [currentQuestion]);
 
+  //HACK: useEffect for handling timer.
+  useEffect(() => {
+    if (timer && timeLimit) {
+      const timerInterval = setInterval(() => {
+        setTimeLimit((prevTimer) => {
+          console.log("this is the hit when timer is not zero", prevTimer);
+          if (prevTimer <= 1 && !lastQuestion) {
+            clearInterval(timerInterval);
+            setCurrentQuestion((prev) => prev + 1);
+            return timeLimit;
+          } else {
+            return prevTimer - 1;
+          }
+        });
+      }, 1000);
+
+      return () => clearInterval(timerInterval);
+    }
+  }, [currentQuestion, timer, timeLimit]);
+  console.log(timeLimit);
+  useEffect(() => {
+    if (timer != "OFF") {
+      setTimeLimit(parseInt(timer));
+    }
+  }, [currentQuestion, timer]);
   console.log(userAnswer);
   return (
     <div className={styles.quizData}>
@@ -65,7 +98,7 @@ const QuizInterface = ({
         <div className={styles.questionNumber}>
           {currentQuestion + 1}/{questionData.length}
         </div>
-        <div className={styles.timer}>00:10s</div>
+        <div className={styles.timer}>00:{timeLimit}s</div>
       </div>
       {questionData[currentQuestion] && (
         <>

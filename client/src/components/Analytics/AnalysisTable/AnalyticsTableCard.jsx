@@ -7,12 +7,10 @@ import { useEffect, useState } from "react";
 import { analytics } from "../../../services/api/quizApi";
 import DeleteForm from "../../DeleteForm/DeleteForm";
 import { REACT_APP_BASE_URL } from "../../../../constant";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import EditPage from "../../../pages/EditPage/EditPage";
-import { useContext } from "react";
-import { formContext } from "../../../context/FormProvider";
+import { formatCreatedAt } from "../../../services/utils/utilFn";
 const AnalysisTableCard = () => {
   const [analyticsData, setAnalyticsData] = useState(null);
   const [showDeleteForm, setDeleteForm] = useState(false);
@@ -20,17 +18,6 @@ const AnalysisTableCard = () => {
   const [showEdit, setEdit] = useState(false);
   const [currentIndexOfQuiz, setCurrentIndexOfQuiz] = useState(null);
 
-  const formatCreatedAt = (date) => {
-    // Assuming createdAt is a valid Date object or a string
-    //
-    const createdAt = new Date(date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-
-    return createdAt;
-  };
   const navigate = useNavigate();
   const handleShareClick = async (id) => {
     setSelectedQuizId(id);
@@ -38,7 +25,7 @@ const AnalysisTableCard = () => {
     const link = `${url}/quiz/${id}`;
     try {
       await navigator.clipboard.writeText(link);
-      toast.success("copied link");
+      toast.success("successfully copied your link");
     } catch (e) {
       toast.error(e.message);
     }

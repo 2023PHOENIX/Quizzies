@@ -8,12 +8,13 @@ import styles from "./app.module.css";
 import Quiz from "./pages/Quiz/Quiz.jsx";
 import "react-toastify/dist/ReactToastify.css";
 
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+
+import { Toaster } from "react-hot-toast";
 import QuizAnalysis from "./components/QuizAnalysis/QuizAnalysis.jsx";
 function App() {
   return (
     <div className={styles.app}>
-      <ToastContainer />
       <div>
         <Routes>
           <Route path="/" element={<Home />}>
@@ -24,6 +25,8 @@ function App() {
           <Route path="/auth" element={<Auth />} />
           <Route path="/quiz/:id" element={<Quiz />} />
         </Routes>
+        <ToastContainer />
+        <Toaster position="top-right" />
       </div>
     </div>
   );

@@ -9,7 +9,10 @@ import { useEffect } from "react";
 import { generateDefaultData } from "../../data/questionDefaultData";
 import { createQuiz, updateQuiz } from "../../services/api/quizApi";
 import { formContext } from "../../context/FormProvider";
-import { toast } from "react-toastify";
+
+import toast from "react-hot-toast";
+import { REACT_APP_BASE_URL } from "../../../constant";
+
 const QuizForm2 = ({
   quizType,
   setQuizCreated,
@@ -54,16 +57,25 @@ const QuizForm2 = ({
       delete question.choiceType;
     });
     const newQuizData = { ...formChoices, questions: updatedQuestion };
-    console.log(newQuizData);
     try {
       if (!editForm) {
         const { data } = await createQuiz(newQuizData);
-        setUrl(data?.url);
-        toast.success(data?.message);
+        const url = `${REACT_APP_BASE_URL}/quiz/${data?.quizId}`;
+
+        console.log(url);
+        setUrl(url);
+        if (data?.url) {
+          toast.success("successfully created the quiz");
+        } else {
+          toast.error("somethign went wrong");
+        }
       } else {
         const { data } = await updateQuiz(formChoices.id, newQuizData);
-        console.log("this is whole data ->", data);
-        toast.success(data?.message);
+        if (data) {
+          toast.success("successfully updated the quiz");
+        } else {
+          toast.error("something went wrong.");
+        }
         setEditForm(false);
       }
     } catch (e) {
@@ -96,10 +108,9 @@ const QuizForm2 = ({
           {questionData &&
             questionData.map((qd, i) => (
               <div
-                className={`${styles.qNum} ${qd.id === selectedQuestionData.id
-                    ? styles.selectedQuestion
-                    : ""
-                  }`}
+                className={`${styles.qNum}                   
+                  ${qd === selectedQuestionData ? styles.selectedQuestion : ""}
+                  `}
                 key={qd.id}
                 onClick={() => changeSelectedQuestion(i)}
               >
