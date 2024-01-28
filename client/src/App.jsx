@@ -7,8 +7,6 @@ import Analytics from "./pages/Analytics/Analytics.jsx";
 import styles from "./app.module.css";
 import Quiz from "./pages/Quiz/Quiz.jsx";
 
-import { ToastContainer } from "react-toastify";
-
 import { Toaster } from "react-hot-toast";
 import QuizAnalysis from "./components/QuizAnalysis/QuizAnalysis.jsx";
 function App() {
@@ -24,7 +22,6 @@ function App() {
           <Route path="/auth" element={<Auth />} />
           <Route path="/quiz/:id" element={<Quiz />} />
         </Routes>
-        <ToastContainer />
         <Toaster position="top-right" />
       </div>
     </div>
