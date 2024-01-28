@@ -71,7 +71,7 @@ const AnalysisTableCard = () => {
           <tbody>
             {analyticsData?.map((data, index) => (
               <tr key={index}>
-                <td>{index}</td>
+                <td>{index + 1}</td>
                 <td>{data.quizName}</td>
                 <td>{formatCreatedAt(data.createdAt)}</td>
                 <td>

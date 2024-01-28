@@ -64,11 +64,7 @@ const QuizForm2 = ({
 
         console.log(url);
         setUrl(url);
-        if (data?.url) {
-          toast.success("successfully created the quiz");
-        } else {
-          toast.error("somethign went wrong");
-        }
+        toast.success("successfully created the quiz");
       } else {
         const { data } = await updateQuiz(formChoices.id, newQuizData);
         if (data) {

@@ -1,23 +1,26 @@
 import { useState } from "react";
 import trophy from "../../../assets/trophy.png";
 import styles from "./quiz.result.module.css";
-const QuizResult = () => {
-  const [quizType, setquizType] = useState("q&a");
+const QuizResult = ({ quizType, result }) => {
   return (
     <div className={styles.wrapper}>
-      {quizType === "q&a" && (
+      {quizType === "Q&A" && (
         <>
           <div className={styles.headingCongrats}>
             Congrats Quiz is completed
           </div>
           <img src={trophy} className={styles.trophy} />
           <div className={styles.score}>
-            your score is <span> 03/04</span>
+            your score is{" "}
+            <span>
+              {result?.correctAnswer}/
+              {`${result?.correctAnswer + result?.incorrectAnswer}`}
+            </span>
           </div>
         </>
       )}
 
-      {quizType === "poll" && (
+      {quizType === "Poll" && (
         <>
           <div className={styles.pollHeading}>
             Thank you for participating in the Poll

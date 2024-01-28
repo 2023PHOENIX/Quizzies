@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import styles from "./deleteform.module.css";
 import { deleteQuiz } from "../../services/api/quizApi";
 
@@ -10,7 +10,7 @@ const DeleteForm = ({ quizId, setDeleteForm }) => {
       console.log(success, message, err);
       toast.success(message);
     } catch (e) {
-      toast.error(e.respones.data.message);
+      toast.error(e.message);
       console.log(e);
     }
     setDeleteForm(false);

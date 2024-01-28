@@ -12,7 +12,8 @@ const Quiz = () => {
   const [questionData, setQuestionsData] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState();
   const [timer, setTimer] = useState("OFF");
-  const [userAnswer, setUserAnswer] = useState();
+  const [quizType, setQuizType] = useState(null);
+  const [result, setResult] = useState(null);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -23,6 +24,7 @@ const Quiz = () => {
           setQuestionsData(data?.questions);
           setCurrentQuestion(0);
           setTimer(data.timer);
+          setQuizType(data?.quizType);
         }
       } catch (e) {
         toast.error(e);
@@ -33,6 +35,7 @@ const Quiz = () => {
     fetchData();
   }, []);
 
+  console.log(result);
   return (
     questionData && (
       <div className={styles.wrapper}>
@@ -44,10 +47,11 @@ const Quiz = () => {
               questionData={questionData}
               setFinalPage={setFinalPage}
               timer={timer}
+              setResult={setResult}
             />
           )}
 
-          {finalPage && <QuizResult />}
+          {finalPage && <QuizResult quizType={quizType} result={result} />}
         </div>
       </div>
     )

@@ -10,10 +10,11 @@ const QuizInterface = ({
   questionData,
   setFinalPage,
   timer,
+  setResult,
 }) => {
   const [lastQuestion, setLastQuestion] = useState(false);
   const [userAnswer, setUserAnswer] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(-1);
   const [timeLimit, setTimeLimit] = useState(
     timer == "OFF" ? null : parseInt(timer),
   );
@@ -41,6 +42,8 @@ const QuizInterface = ({
       console.log("data", response);
       if (response.success) {
         toast.success("quiz is submitted successfully");
+        setResult(response?.data);
+        console.log(response?.data);
       } else {
         toast.error("something went wrong");
       }
@@ -76,6 +79,8 @@ const QuizInterface = ({
             clearInterval(timerInterval);
             setCurrentQuestion((prev) => prev + 1);
             return timeLimit;
+          } else if (lastQuestion && prevTimer <= 1) {
+            handleSubmit();
           } else {
             return prevTimer - 1;
           }
