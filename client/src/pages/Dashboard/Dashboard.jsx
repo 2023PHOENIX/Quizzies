@@ -4,8 +4,6 @@ import QuizCard from "../../components/Dashboard/QuizCard/QuizCard.jsx";
 import styles from "./dashboard.module.css";
 import { useState } from "react";
 import { dashboard } from "../../services/api/quizApi.js";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 const DashBoard = () => {
   const [dashBoardData, setDashboardData] = useState(null);
   useEffect(() => {

@@ -5,7 +5,8 @@ import QuizResult from "../../components/Quiz/QuizResult/QuizResult";
 import { useEffect } from "react";
 import { fetchQuizData } from "../../services/api/quizApi";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
+
 const Quiz = () => {
   const { id } = useParams();
   const [finalPage, setFinalPage] = useState(false);

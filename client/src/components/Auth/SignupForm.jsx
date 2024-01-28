@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import "react-toastify/dist/ReactToastify.css";
 import { signup } from "../../services/api/userApi";
 import styles from "./auth.module.css";
 import { useState } from "react";

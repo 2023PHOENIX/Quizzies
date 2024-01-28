@@ -6,7 +6,6 @@ import DashBoard from "./pages/Dashboard/Dashboard.jsx";
 import Analytics from "./pages/Analytics/Analytics.jsx";
 import styles from "./app.module.css";
 import Quiz from "./pages/Quiz/Quiz.jsx";
-import "react-toastify/dist/ReactToastify.css";
 
 import { ToastContainer } from "react-toastify";
 

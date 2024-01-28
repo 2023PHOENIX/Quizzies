@@ -4,7 +4,6 @@ import CreateQuiz from "../createQuiz/CreateQuiz";
 import { useContext } from "react";
 import { formContext } from "../../context/FormProvider";
 import UseAuth from "../../services/hooks/UseAuth";
-import "react-toastify/dist/ReactToastify.css";
 const Home = () => {
   const isLoggedIn = UseAuth();
   console.log(isLoggedIn);
