@@ -10,7 +10,9 @@ class UserService {
 
   async signup(data) {
     try {
-      console.log(data);
+      if (!data) {
+        throw new Error("Please provide valid data");
+      }
       if (data.password !== data.confirmPassword) {
         throw new Error("your password is not same");
       }

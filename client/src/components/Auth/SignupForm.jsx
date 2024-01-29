@@ -30,7 +30,7 @@ const SignupForm = () => {
       }
     } catch (e) {
       console.log(e);
-      toast.error(e.response.data.message);
+      toast.error(e?.response?.data?.message);
     }
   };
   return (

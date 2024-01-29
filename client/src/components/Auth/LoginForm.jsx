@@ -19,7 +19,6 @@ const LoginForm = () => {
     try {
       if (userInfo.email === "" || userInfo.password === "") {
         toast.error("your email or password feild is empty");
-        setError(true);
         return;
       }
       const { data } = await login(userInfo);
