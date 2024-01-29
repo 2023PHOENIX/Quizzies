@@ -26,7 +26,7 @@ const DeleteForm = ({ quizId, setDeleteForm }) => {
             Confirm Delete
           </button>
           <button className={styles.cncl} onClick={() => setDeleteForm(false)}>
-            Cancle
+            Cancel
           </button>
         </div>
       </div>

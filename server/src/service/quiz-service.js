@@ -190,6 +190,7 @@ class QuizService {
         if (!qa) {
           throw new Error("please re-create the quiz");
         }
+
         for (let i = qa.questions.length; i < quiz.questions.length; i++) {
           qa.questions[i] = { correctAttempt: 0, incorrectAttempt: 0 };
         }

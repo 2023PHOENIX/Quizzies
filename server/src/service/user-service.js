@@ -102,7 +102,7 @@ class UserService {
       });
 
       totalImpression = this.userRepository.convertImpressions(totalImpression);
-      quizzies.sort((a, b) => b.impressions - a.impressions);
+      // quizzies.sort((a, b) => b.impressions - a.impressions);
 
       const trendingQuizData = quizzies
         .filter((q) => q.impressions > 10)
