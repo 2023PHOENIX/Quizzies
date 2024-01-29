@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import styles from "./quizForm2.module.css";
 const QuestionData = ({ data, setData, quizType }) => {
-  console.log(data);
   const addOption = () => {
     setData((prevData) => ({
       ...prevData,
@@ -122,6 +121,9 @@ const QuestionData = ({ data, setData, quizType }) => {
                     }                    
 ${data.correctAnswer === `${index + 1}` ? styles.correctAnswerStyle : ""}
                                    `}
+                  style={
+                    data?.choiceType === "text&url" ? { width: "11rem" } : {}
+                  }
                   value={opData.text}
                   onChange={(e) =>
                     handleInputChanges(opData.id, "text", e.target.value)
@@ -140,9 +142,6 @@ ${data.correctAnswer === `${index + 1}` ? styles.correctAnswerStyle : ""}
 
 
                     `}
-                  style={{
-                    width: data?.choiceType === "url" ? undefined : "16rem",
-                  }}
                   onChange={(e) =>
                     handleInputChanges(opData.id, "url", e.target.value)
                   }

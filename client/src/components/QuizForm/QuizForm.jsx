@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import styles from "./quizForm.module.css";
 import { useNavigate } from "react-router-dom";
 import { formContext } from "../../context/FormProvider.jsx";
+import toast from "react-hot-toast";
 
 const QuizForm = ({ setFormChoices }) => {
   const [inputData, setInputData] = useState(null);
@@ -13,7 +14,13 @@ const QuizForm = ({ setFormChoices }) => {
   };
 
   const handleContinue = () => {
+    console.log(inputData);
+    if (!inputData) {
+      toast.error("Quiz name can't be empty");
+      return;
+    }
     if (picked != "1" && picked != "2") {
+      toast.error("Quiz Type can't be empty");
       return;
     }
 

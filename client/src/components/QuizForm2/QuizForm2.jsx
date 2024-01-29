@@ -56,7 +56,9 @@ const QuizForm2 = ({
     updatedQuestion.forEach((question) => {
       delete question.choiceType;
     });
+
     const newQuizData = { ...formChoices, questions: updatedQuestion };
+
     try {
       if (!editForm) {
         const { data } = await createQuiz(newQuizData);
@@ -64,6 +66,7 @@ const QuizForm2 = ({
 
         console.log(url);
         setUrl(url);
+        setQuizCreated(true);
         toast.success("successfully created the quiz");
       } else {
         const { data } = await updateQuiz(formChoices.id, newQuizData);
@@ -73,11 +76,11 @@ const QuizForm2 = ({
           toast.error("something went wrong.");
         }
         setEditForm(false);
+        setQuizCreated(true);
       }
     } catch (e) {
       toast.error(e.response.data.message);
     }
-    setQuizCreated(true);
   };
 
   const handleCancleQuiz = () => {

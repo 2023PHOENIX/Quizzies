@@ -17,10 +17,20 @@ const Sidebar = () => {
       <h1> QUIZZIE</h1>
 
       <div className={styles.elements}>
-        <Link to="/dashboard">
+        <Link
+          to="/dashboard"
+          className={
+            location.pathname === "/dashboard" ? styles.selectedSideBar : ""
+          }
+        >
           <div>Dashboard</div>
         </Link>
-        <Link to="/analytics">
+        <Link
+          to="/analytics"
+          className={
+            location.pathname === "/analytics" ? styles.selectedSideBar : ""
+          }
+        >
           <div>Analytics</div>
         </Link>
         <div onClick={() => setForm(!showForm)}>Create Quiz</div>
@@ -28,7 +38,7 @@ const Sidebar = () => {
 
       <img src={line} alt="line" className={styles.line} />
       <div className={styles.logout} onClick={handleLogout}>
-        Logout{" "}
+        Logout
       </div>
     </div>
   );

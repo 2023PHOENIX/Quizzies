@@ -16,6 +16,27 @@ class QuizService {
   // TODO: add the reference of the quiz to user quiz array.
   async createQuiz(data) {
     try {
+      let errorFlag = false;
+      let errorMessage = "";
+      data?.questions.forEach((q, i) => {
+        if (q.title === "") {
+          errorFlag = true;
+          errorMessage = `question ${i + 1} title can't be empty`;
+        } else if (data.quizType === "Q&A" && !q.correctAnswer) {
+          errorFlag = true;
+          errorMessage = `please mark correct option for question ${i + 1} `;
+        }
+
+        q.options.forEach((o, i) => {
+          if (!o.text && !o.url) {
+            errorFlag = true;
+            errorMessage = `option can't be empty`;
+            return;
+          }
+        });
+      });
+      if (errorFlag) throw new Error(errorMessage);
+
       const response = await this.quizRepository.create(data);
 
       if (!response) {

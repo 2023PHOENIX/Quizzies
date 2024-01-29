@@ -23,6 +23,7 @@ const QuizInterface = ({
   const handleNextClick = () => {
     updateUserAnswers(currentQuestion, selectedOption + 1);
     setCurrentQuestion((prev) => prev + 1);
+    setSelectedOption(-1); // BUG: solving some issue
   };
 
   const updateUserAnswers = (index, value) => {
@@ -103,7 +104,9 @@ const QuizInterface = ({
         <div className={styles.questionNumber}>
           {currentQuestion + 1}/{questionData.length}
         </div>
-        <div className={styles.timer}>00:{timeLimit}s</div>
+        {timer && timer != "OFF" && (
+          <div className={styles.timer}>00:{timeLimit}s</div>
+        )}
       </div>
       {questionData[currentQuestion] && (
         <>
@@ -147,7 +150,7 @@ const QuizInterface = ({
                       }`}
                     onClick={() => handleSelectedOptionChange(i)}
                   >
-                    <p>{option.text}</p>
+                    <p>{option?.text?.slice(0, 15)}</p>
                     <img
                       className={styles.imgOption}
                       src={option.url}

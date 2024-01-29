@@ -119,25 +119,46 @@
 
 @media (max-width: 600px) {
   .quizData {
-    height: 100vh;
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
   .question {
     font-size: 1.8rem;
+    height: 8.875rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .imageOption {
+    padding: 0.2rem;
+    width: 20.125rem;
+    height: 10.16269rem;
+    flex-shrink: 0;
   }
   .options {
-    gap: 0;
+    gap: 0.5rem;
     display: flex;
     align-items: flex-start;
   }
+  .textUrlOption {
+    font-size: 1rem;
+    margin: auto;
+  }
   .option {
+    font-size: 1.2rem;
   }
   .textOption {
     width: 20.06363rem;
     height: 3.54375rem;
     flex-shrink: 0;
     font-size: 1.6rem;
-
+    overflow: scroll;
     margin: 0.5rem;
+  }
+
+  .button {
+    margin: 5rem;
   }
 }

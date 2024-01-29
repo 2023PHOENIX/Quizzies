@@ -1,12 +1,7 @@
 import { useState } from "react";
-import QuizForm from "../../components/QuizForm/QuizForm";
 import styles from "./editPage.module.css";
 import QuizForm2 from "../../components/QuizForm2/QuizForm2";
-import Congrats from "../../components/Congrats/Congrats";
-import { useContext } from "react";
-import { formContext } from "../../context/FormProvider";
 import { useEffect } from "react";
-import QuestionData from "../../components/QuizForm2/QuestionData";
 
 const EditPage = ({ quiz }) => {
   console.log(quiz._id);

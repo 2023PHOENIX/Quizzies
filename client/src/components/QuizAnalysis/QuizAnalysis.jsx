@@ -23,7 +23,7 @@ const QuizAnalysis = () => {
   console.log(QuizAnalysis, quiz);
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.quizHeading}>{quiz?.quizName}</h1>{" "}
+      <h1 className={styles.quizHeading}>{quiz?.quizName} Question Analysis</h1>
       <div className={styles.quizExtraDetails}>
         <div className={styles.createdAt}>
           Created on : {formatCreatedAt(quiz?.createdAt)}

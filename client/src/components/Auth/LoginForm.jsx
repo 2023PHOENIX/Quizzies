@@ -17,8 +17,12 @@ const LoginForm = () => {
 
   const handleSubmit = async () => {
     try {
+      if (userInfo.email === "" || userInfo.password === "") {
+        toast.error("your email or password feild is empty");
+        setError(true);
+        return;
+      }
       const { data } = await login(userInfo);
-      console.log(data);
       if (data?.token) {
         console.log("token recieved", data.token);
         localStorage.setItem("token", data.token);

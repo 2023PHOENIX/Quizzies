@@ -102,12 +102,14 @@ class UserService {
       totalImpression = this.userRepository.convertImpressions(totalImpression);
       quizzies.sort((a, b) => b.impressions - a.impressions);
 
-      const trendingQuizData = quizzies.map((q) => ({
-        _id: q._id,
-        quizName: this.userRepository.truncateQuizNameFn(q.quizName, 7),
-        createdAt: this.userRepository.formatCreatedAt(q.createdAt),
-        impressions: q.impressions,
-      }));
+      const trendingQuizData = quizzies
+        .filter((q) => q.impressions > 10)
+        .map((q) => ({
+          _id: q._id,
+          quizName: this.userRepository.truncateQuizNameFn(q.quizName, 7),
+          createdAt: this.userRepository.formatCreatedAt(q.createdAt),
+          impressions: q.impressions,
+        }));
 
       return { quizCreated, totalQuestions, totalImpression, trendingQuizData };
     } catch (e) {
